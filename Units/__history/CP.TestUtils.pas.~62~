@@ -1,0 +1,82 @@
+unit CP.TestUtils;
+
+interface
+
+uses
+    Windows, Classes, SysUtils,
+    CP.Def;
+
+
+const
+    StartPath:'F:\GitHub\ChromaPrint\Tests_Delphi\'; // adjust this to your configuration
+
+function LoadAudioFile(filename: string): TSmallIntArray;
+procedure CheckFingerprints(List: TStrings; actual, expected: TUINT32Array; expected_size: integer); inline;
+
+implementation
+
+function LoadAudioFile(filename: string): TSmallIntArray;
+var
+    lPath: string;
+    data: TSmallIntArray;
+    lLength: integer;
+    fs: integer;
+    lError, i, n: integer;
+    lBuffer: PByte;
+begin
+    lPath := StartPath + filename;
+
+    fs := FileOpen(lPath, fmOpenRead);
+    lLength := SysUtils.FileSeek(fs, 0, 2);
+    FileSeek(fs, 0, 0);
+    lBuffer := System.AllocMem(lLength + 1);
+    lError := FileRead(fs, lBuffer^, lLength);
+    if lError = -1 then
+        OutputDebugString('shit');
+    FileClose(fs);
+
+    n := lLength div 2;
+    SetLength(data, n);
+    for i := 0 to n - 1 do
+    begin
+        data[i] := lBuffer[i * 2] + lBuffer[i * 2 + 1] * 256;
+    end;
+
+    FreeMem(lBuffer);
+
+    result := data;
+end;
+
+procedure CheckFingerprints(List: TStrings; actual, expected: TUINT32Array; expected_size: integer); inline;
+var
+    i: integer;
+    error: boolean;
+begin
+    if expected_size = Length(actual) then
+    begin
+        List.Add('Length: OK');
+
+        error := FALSE;
+        for i := 0 to expected_size - 1 do
+        begin
+            if expected[i] <> expected[i] then
+            begin
+                List.Add('Different at index :' + IntToStr(i));
+                error := TRUE;
+            end;
+
+        end;
+        if not error then
+        begin
+            List.Add('All Values ok');
+        end;
+
+    end
+    else
+    begin
+        List.Add('Length: NOT OK');
+    end;
+
+end;
+
+end.

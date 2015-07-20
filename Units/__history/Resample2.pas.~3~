@@ -1,0 +1,23 @@
+unit Resample2;
+
+{$IFDEF FPC}
+{$mode delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils;
+
+
+
+
+
+
+
+implementation
+
+
+
+end.
+

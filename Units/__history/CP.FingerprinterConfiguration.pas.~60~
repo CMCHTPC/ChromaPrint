@@ -1,0 +1,314 @@
+{$REGION 'Copyright (C) CMC Development Team'}
+{ **************************************************************************
+  Copyright (C) 2015 CMC Development Team
+
+  CMC is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  CMC is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with CMC. If not, see <http://www.gnu.org/licenses/>.
+  ************************************************************************** }
+
+{ **************************************************************************
+  Additional Copyright (C) for this modul:
+
+  Chromaprint: Audio fingerprinting toolkit
+  Copyright (C) 2010-2012  Lukas Lalinsky <lalinsky@gmail.com>
+
+
+  Lomont FFT: Fast Fourier Transformation
+  Original code by Chris Lomont, 2010-2012, http://www.lomont.org/Software/
+
+
+  ************************************************************************** }
+{$ENDREGION}
+{$REGION 'Notes'}
+{ **************************************************************************
+
+  See CP.Chromaprint.pas for more information
+
+  ************************************************************************** }
+unit CP.FingerprinterConfiguration;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def,
+    CP.Classifier;
+
+type
+
+    { TFingerprinterConfiguration }
+
+    TFingerprinterConfiguration = class(TObject)
+    protected
+        FNumClassifiers: integer;
+        FClassifiers: TClassifierArray;
+        FNumFilterCoefficients: integer;
+        FFilterCoefficients: TDoubleArray;
+        FInterpolate: boolean;
+        FRemoveSilence: boolean;
+        FSilenceThreshold: integer;
+        kChromaFilterCoefficients: TDoubleArray;
+    public
+        property FilterCoefficients: TDoubleArray read FFilterCoefficients;
+        property NumClassifiers: integer read FNumClassifiers;
+        property NumFilterCoefficients: integer read FNumFilterCoefficients;
+        property Interpolate: boolean read FInterpolate write FInterpolate;
+        property RemoveSilence: boolean read FRemoveSilence write FRemoveSilence;
+        property SilenceThreshold: integer read FSilenceThreshold write FSilenceThreshold;
+        property Classifiers: TClassifierArray read FClassifiers;
+    public
+        constructor Create;
+        destructor Destroy; override;
+        procedure SetClassifiers(Classifiers: TClassifierArray);
+        procedure SetFilterCoefficients(FilterCoefficients: TDoubleArray);
+    end;
+
+    // Used for http://oxygene.sk/lukas/2010/07/introducing-chromaprint/
+    // Trained on a randomly selected test data
+
+    { TFingerprinterConfigurationTest1 }
+
+    TFingerprinterConfigurationTest1 = class(TFingerprinterConfiguration)
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+    // Trained on 60k pairs based on eMusic samples (mp3)
+
+    { TFingerprinterConfigurationTest2 }
+
+    TFingerprinterConfigurationTest2 = class(TFingerprinterConfiguration)
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+    // Trained on 60k pairs based on eMusic samples with interpolation enabled (mp3)
+
+    { TFingerprinterConfigurationTest3 }
+
+    TFingerprinterConfigurationTest3 = class(TFingerprinterConfiguration)
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+    // Same as v2, but trims leading silence
+
+    { TFingerprinterConfigurationTest4 }
+
+    TFingerprinterConfigurationTest4 = class(TFingerprinterConfigurationTest2)
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+function CreateFingerprinterConfiguration(algorithm: integer): TFingerprinterConfiguration; inline;
+
+implementation
+
+uses
+    CP.Quantizer,
+    CP.Filter;
+
+const
+    kChromaFilterSize = 5;
+
+function CreateFingerprinterConfiguration(algorithm: integer): TFingerprinterConfiguration; inline;
+begin
+    case (algorithm) of
+        ord(CHROMAPRINT_ALGORITHM_TEST1):
+            Result := TFingerprinterConfigurationTest1.Create;
+        ord(CHROMAPRINT_ALGORITHM_TEST2):
+            Result := TFingerprinterConfigurationTest2.Create;
+        ord(CHROMAPRINT_ALGORITHM_TEST3):
+            Result := TFingerprinterConfigurationTest3.Create;
+        ord(CHROMAPRINT_ALGORITHM_TEST4):
+            Result := TFingerprinterConfigurationTest4.Create;
+    else
+        Result := nil;
+    end;
+end;
+
+{ TFingerprinterConfigurationTest4 }
+
+constructor TFingerprinterConfigurationTest4.Create;
+var
+    kClassifiersTest: TClassifierArray;
+begin
+    inherited Create;
+    RemoveSilence := True;
+    SilenceThreshold := 50;
+end;
+
+destructor TFingerprinterConfigurationTest4.Destroy;
+begin
+
+    inherited;
+end;
+
+{ TFingerprinterConfigurationTest3 }
+
+constructor TFingerprinterConfigurationTest3.Create;
+var
+    kClassifiersTest: TClassifierArray;
+begin
+    inherited Create;
+    SetLength(kClassifiersTest, 16);
+    kClassifiersTest[0] := TClassifier.Create(TFilter.Create(0, 4, 3, 15), TQuantizer.Create(1.98215, 2.35817, 2.63523));
+    kClassifiersTest[1] := TClassifier.Create(TFilter.Create(4, 4, 6, 15), TQuantizer.Create(-1.03809, -0.651211, -0.282167));
+    kClassifiersTest[2] := TClassifier.Create(TFilter.Create(1, 0, 4, 16), TQuantizer.Create(-0.298702, 0.119262, 0.558497));
+    kClassifiersTest[3] := TClassifier.Create(TFilter.Create(3, 8, 2, 12), TQuantizer.Create(-0.105439, 0.0153946, 0.135898));
+    kClassifiersTest[4] := TClassifier.Create(TFilter.Create(3, 4, 4, 8), TQuantizer.Create(-0.142891, 0.0258736, 0.200632));
+    kClassifiersTest[5] := TClassifier.Create(TFilter.Create(4, 0, 3, 5), TQuantizer.Create(-0.826319, -0.590612, -0.368214));
+    kClassifiersTest[6] := TClassifier.Create(TFilter.Create(1, 2, 2, 9), TQuantizer.Create(-0.557409, -0.233035, 0.0534525));
+    kClassifiersTest[7] := TClassifier.Create(TFilter.Create(2, 7, 3, 4), TQuantizer.Create(-0.0646826, 0.00620476, 0.0784847));
+    kClassifiersTest[8] := TClassifier.Create(TFilter.Create(2, 6, 2, 16), TQuantizer.Create(-0.192387, -0.029699, 0.215855));
+    kClassifiersTest[9] := TClassifier.Create(TFilter.Create(2, 1, 3, 2), TQuantizer.Create(-0.0397818, -0.00568076, 0.0292026));
+    kClassifiersTest[10] := TClassifier.Create(TFilter.Create(5, 10, 1, 15), TQuantizer.Create(-0.53823, -0.369934, -0.190235));
+    kClassifiersTest[11] := TClassifier.Create(TFilter.Create(3, 6, 2, 10), TQuantizer.Create(-0.124877, 0.0296483, 0.139239));
+    kClassifiersTest[12] := TClassifier.Create(TFilter.Create(2, 1, 1, 14), TQuantizer.Create(-0.101475, 0.0225617, 0.231971));
+    kClassifiersTest[13] := TClassifier.Create(TFilter.Create(3, 5, 6, 4), TQuantizer.Create(-0.0799915, -0.00729616, 0.063262));
+    kClassifiersTest[14] := TClassifier.Create(TFilter.Create(1, 9, 2, 12), TQuantizer.Create(-0.272556, 0.019424, 0.302559));
+    kClassifiersTest[15] := TClassifier.Create(TFilter.Create(3, 4, 2, 14), TQuantizer.Create(-0.164292, -0.0321188, 0.0846339));
+
+    SetClassifiers(kClassifiersTest);
+    SetFilterCoefficients(kChromaFilterCoefficients);
+    Interpolate := True;
+end;
+
+destructor TFingerprinterConfigurationTest3.Destroy;
+begin
+
+    inherited;
+end;
+
+{ TFingerprinterConfigurationTest2 }
+
+constructor TFingerprinterConfigurationTest2.Create;
+var
+    kClassifiersTest: TClassifierArray; // array [0..15] of TClassifier;
+begin
+    inherited Create;
+
+    SetLength(kClassifiersTest, 16);
+    kClassifiersTest[0] := TClassifier.Create(TFilter.Create(0, 4, 3, 15), TQuantizer.Create(1.98215, 2.35817, 2.63523));
+    kClassifiersTest[1] := TClassifier.Create(TFilter.Create(4, 4, 6, 15), TQuantizer.Create(-1.03809, -0.651211, -0.282167));
+    kClassifiersTest[2] := TClassifier.Create(TFilter.Create(1, 0, 4, 16), TQuantizer.Create(-0.298702, 0.119262, 0.558497));
+    kClassifiersTest[3] := TClassifier.Create(TFilter.Create(3, 8, 2, 12), TQuantizer.Create(-0.105439, 0.0153946, 0.135898));
+    kClassifiersTest[4] := TClassifier.Create(TFilter.Create(3, 4, 4, 8), TQuantizer.Create(-0.142891, 0.0258736, 0.200632));
+    kClassifiersTest[5] := TClassifier.Create(TFilter.Create(4, 0, 3, 5), TQuantizer.Create(-0.826319, -0.590612, -0.368214));
+    kClassifiersTest[6] := TClassifier.Create(TFilter.Create(1, 2, 2, 9), TQuantizer.Create(-0.557409, -0.233035, 0.0534525));
+    kClassifiersTest[7] := TClassifier.Create(TFilter.Create(2, 7, 3, 4), TQuantizer.Create(-0.0646826, 0.00620476, 0.0784847));
+    kClassifiersTest[8] := TClassifier.Create(TFilter.Create(2, 6, 2, 16), TQuantizer.Create(-0.192387, -0.029699, 0.215855));
+    kClassifiersTest[9] := TClassifier.Create(TFilter.Create(2, 1, 3, 2), TQuantizer.Create(-0.0397818, -0.00568076, 0.0292026));
+    kClassifiersTest[10] := TClassifier.Create(TFilter.Create(5, 10, 1, 15), TQuantizer.Create(-0.53823, -0.369934, -0.190235));
+    kClassifiersTest[11] := TClassifier.Create(TFilter.Create(3, 6, 2, 10), TQuantizer.Create(-0.124877, 0.0296483, 0.139239));
+    kClassifiersTest[12] := TClassifier.Create(TFilter.Create(2, 1, 1, 14), TQuantizer.Create(-0.101475, 0.0225617, 0.231971));
+    kClassifiersTest[13] := TClassifier.Create(TFilter.Create(3, 5, 6, 4), TQuantizer.Create(-0.0799915, -0.00729616, 0.063262));
+    kClassifiersTest[14] := TClassifier.Create(TFilter.Create(1, 9, 2, 12), TQuantizer.Create(-0.272556, 0.019424, 0.302559));
+    kClassifiersTest[15] := TClassifier.Create(TFilter.Create(3, 4, 2, 14), TQuantizer.Create(-0.164292, -0.0321188, 0.0846339));
+
+    SetClassifiers(kClassifiersTest);
+    SetFilterCoefficients(kChromaFilterCoefficients);
+    Interpolate := False;
+end;
+
+destructor TFingerprinterConfigurationTest2.Destroy;
+begin
+    inherited;
+end;
+
+{ TFingerprinterConfigurationTest1 }
+
+constructor TFingerprinterConfigurationTest1.Create;
+var
+    kClassifiersTest: TClassifierArray; // array [0..15] of TClassifier;
+begin
+    inherited Create;
+    SetLength(kClassifiersTest, 16);
+    kClassifiersTest[0] := TClassifier.Create(TFilter.Create(0, 0, 3, 15), TQuantizer.Create(2.10543, 2.45354, 2.69414));
+    kClassifiersTest[1] := TClassifier.Create(TFilter.Create(1, 0, 4, 14), TQuantizer.Create(-0.345922, 0.0463746, 0.446251));
+    kClassifiersTest[2] := TClassifier.Create(TFilter.Create(1, 4, 4, 11), TQuantizer.Create(-0.392132, 0.0291077, 0.443391));
+    kClassifiersTest[3] := TClassifier.Create(TFilter.Create(3, 0, 4, 14), TQuantizer.Create(-0.192851, 0.00583535, 0.204053));
+    kClassifiersTest[4] := TClassifier.Create(TFilter.Create(2, 8, 2, 4), TQuantizer.Create(-0.0771619, -0.00991999, 0.0575406));
+    kClassifiersTest[5] := TClassifier.Create(TFilter.Create(5, 6, 2, 15), TQuantizer.Create(-0.710437, -0.518954, -0.330402));
+    kClassifiersTest[6] := TClassifier.Create(TFilter.Create(1, 9, 2, 16), TQuantizer.Create(-0.353724, -0.0189719, 0.289768));
+    kClassifiersTest[7] := TClassifier.Create(TFilter.Create(3, 4, 2, 10), TQuantizer.Create(-0.128418, -0.0285697, 0.0591791));
+    kClassifiersTest[8] := TClassifier.Create(TFilter.Create(3, 9, 2, 16), TQuantizer.Create(-0.139052, -0.0228468, 0.0879723));
+    kClassifiersTest[9] := TClassifier.Create(TFilter.Create(2, 1, 3, 6), TQuantizer.Create(-0.133562, 0.00669205, 0.155012));
+    kClassifiersTest[10] := TClassifier.Create(TFilter.Create(3, 3, 6, 2), TQuantizer.Create(-0.0267, 0.00804829, 0.0459773));
+    kClassifiersTest[11] := TClassifier.Create(TFilter.Create(2, 8, 1, 10), TQuantizer.Create(-0.0972417, 0.0152227, 0.129003));
+    kClassifiersTest[12] := TClassifier.Create(TFilter.Create(3, 4, 4, 14), TQuantizer.Create(-0.141434, 0.00374515, 0.149935));
+    kClassifiersTest[13] := TClassifier.Create(TFilter.Create(5, 4, 2, 15), TQuantizer.Create(-0.64035, -0.466999, -0.285493));
+    kClassifiersTest[14] := TClassifier.Create(TFilter.Create(5, 9, 2, 3), TQuantizer.Create(-0.322792, -0.254258, -0.174278));
+    kClassifiersTest[15] := TClassifier.Create(TFilter.Create(2, 1, 8, 4), TQuantizer.Create(-0.0741375, -0.00590933, 0.0600357));
+
+    SetClassifiers(kClassifiersTest);
+    SetFilterCoefficients(kChromaFilterCoefficients);
+    Interpolate := False;
+end;
+
+destructor TFingerprinterConfigurationTest1.Destroy;
+begin
+
+    inherited;
+end;
+
+{ TFingerprinterConfiguration }
+
+constructor TFingerprinterConfiguration.Create;
+begin
+    FNumClassifiers := 0;
+    FClassifiers := nil;
+    FRemoveSilence := False;
+    FSilenceThreshold := 0;
+
+    SetLength(kChromaFilterCoefficients, kChromaFilterSize);
+
+    kChromaFilterCoefficients[0] := 0.25;
+    kChromaFilterCoefficients[1] := 0.75;
+    kChromaFilterCoefficients[2] := 1.0;
+    kChromaFilterCoefficients[3] := 0.75;
+    kChromaFilterCoefficients[4] := 0.25;
+
+end;
+
+destructor TFingerprinterConfiguration.Destroy;
+var
+    i: integer;
+begin
+    for i := 0 to Length(FClassifiers) - 1 do
+    begin
+        FClassifiers[i].Free;
+    end;
+    inherited;
+end;
+
+procedure TFingerprinterConfiguration.SetClassifiers(Classifiers: TClassifierArray);
+begin
+    FClassifiers := Classifiers;
+    FNumClassifiers := Length(Classifiers);
+end;
+
+procedure TFingerprinterConfiguration.SetFilterCoefficients(FilterCoefficients: TDoubleArray);
+begin
+    FFilterCoefficients := FilterCoefficients;
+    FNumFilterCoefficients := Length(FilterCoefficients);
+end;
+
+end.

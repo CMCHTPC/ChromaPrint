@@ -1,0 +1,326 @@
+{$REGION 'Copyright (C) CMC Development Team'}
+{ **************************************************************************
+  Copyright (C) 2015 CMC Development Team
+
+  CMC is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  CMC is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with CMC. If not, see <http://www.gnu.org/licenses/>.
+  ************************************************************************** }
+
+{ **************************************************************************
+  Additional Copyright (C) for this modul:
+
+  Chromaprint: Audio fingerprinting toolkit
+  Copyright (C) 2010-2012  Lukas Lalinsky <lalinsky@gmail.com>
+
+
+  Lomont FFT: Fast Fourier Transformation
+  Original code by Chris Lomont, 2010-2012, http://www.lomont.org/Software/
+
+
+  ************************************************************************** }
+{$ENDREGION}
+{$REGION 'Notes'}
+{ **************************************************************************
+
+  See CP.Chromaprint.pas for more information
+
+  ************************************************************************** }
+
+unit CP.FingerprintCompressor;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils, CP.BitString, CP.Def;
+
+const
+    kMaxNormalValue = integer(7);
+    kNormalBits = integer(3);
+    kExceptionBits = integer(5);
+
+type
+
+    { TFingerprintCompressor }
+
+    TFingerprintCompressor = class(TObject)
+    private
+        FResult: string;
+        FBits: array of byte;
+    private
+        procedure WriteNormalBits();
+        procedure WriteExceptionBits();
+        procedure ProcessSubfingerprint(x: uint32);
+    public
+        constructor Create;
+        function Compress(fingerprint: TUINT32Array; algorithm: integer = 0): string;
+    end;
+
+    TFingerprintDecompressor = class(TObject)
+    private
+        FResult: TUINT32Array;
+        FBits: array of byte;
+        function ReadNormalBits(reader: TBitStringReader): boolean;
+        function ReadExceptionBits(reader: TBitStringReader): boolean;
+        procedure UnpackBits();
+    public
+        constructor Create;
+        function Decompress(fingerprint: string; var algorithm: integer): TUINT32Array;
+    end;
+
+function CompressFingerprint(Data: TUINT32Array; algorithm: integer = 0): string; inline;
+function DecompressFingerprint(Data: string; var algorithm: integer): TUINT32Array; inline;
+
+implementation
+
+uses
+    Math
+{$IFDEF FPC}
+    , DaMath
+{$ENDIF};
+
+function CompressFingerprint(Data: TUINT32Array; algorithm: integer = 0): string; inline;
+var
+    compressor: TFingerprintCompressor;
+begin
+    compressor := TFingerprintCompressor.Create;
+    try
+        Result := compressor.Compress(Data, algorithm);
+    finally
+        compressor.Free;
+    end;
+end;
+
+function DecompressFingerprint(Data: string; var algorithm: integer): TUINT32Array; inline;
+var
+    decompressor: TFingerprintDecompressor;
+begin
+    decompressor := TFingerprintDecompressor.Create;
+    try
+        Result := decompressor.Decompress(Data, algorithm);
+    finally
+        decompressor.Free;
+    end;
+end;
+
+{ TFingerprintCompressor }
+
+constructor TFingerprintCompressor.Create;
+begin
+end;
+
+procedure TFingerprintCompressor.ProcessSubfingerprint(x: uint32);
+var
+    bit, last_bit, n: integer;
+begin
+    bit := 1;
+    last_bit := 0;
+    while (x <> 0) do
+    begin
+        if ((x and 1) <> 0) then
+        begin
+            n := Length(FBits);
+            SetLength(FBits, n + 1);
+            FBits[n] := (bit - last_bit);
+            last_bit := bit;
+        end;
+        x := x shr 1;
+        Inc(bit);
+    end;
+    n := Length(FBits);
+    SetLength(FBits, n + 1);
+    FBits[n] := 0;
+end;
+
+procedure TFingerprintCompressor.WriteExceptionBits;
+var
+    writer: TBitStringWriter;
+    i: integer;
+begin
+    writer := TBitStringWriter.Create;
+    for i := 0 to Length(FBits) - 1 do
+    begin
+        if (FBits[i] >= kMaxNormalValue) then
+        begin
+            writer.Write(FBits[i] - kMaxNormalValue, kExceptionBits);
+        end;
+    end;
+    writer.Flush();
+    FResult := FResult + writer.Value;
+    writer.Free;
+end;
+
+procedure TFingerprintCompressor.WriteNormalBits;
+var
+    writer: TBitStringWriter;
+    i: integer;
+begin
+    writer := TBitStringWriter.Create;
+    for i := 0 to Length(FBits) - 1 do
+    begin
+        writer.Write(Math.Min(FBits[i], kMaxNormalValue), kNormalBits);
+    end;
+    writer.Flush();
+    FResult := FResult + writer.Value;
+    writer.Free;
+end;
+
+function TFingerprintCompressor.Compress(fingerprint: TUINT32Array; algorithm: integer = 0): string;
+var
+    i, n: integer;
+begin
+    n := Length(fingerprint);
+    if n > 0 then
+    begin
+        ProcessSubfingerprint(fingerprint[0]);
+        for i := 1 to n - 1 do
+        begin
+            ProcessSubfingerprint(fingerprint[i] xor fingerprint[i - 1]);
+        end;
+    end;
+    FResult := chr(algorithm and 255);
+
+    FResult := FResult + chr((n shr 16) and 255);
+    FResult := FResult + chr((n shr 8) and 255);
+    FResult := FResult + chr(n and 255);
+    WriteNormalBits();
+    WriteExceptionBits();
+    Result := FResult;
+end;
+
+{ TFingerprintDecompressor }
+
+constructor TFingerprintDecompressor.Create;
+begin
+
+end;
+
+function TFingerprintDecompressor.Decompress(fingerprint: string; var algorithm: integer): TUINT32Array;
+var
+    n: integer;
+    reader: TBitStringReader;
+begin
+    SetLength(Result, 0);
+    if Length(fingerprint) < 4 then
+    begin
+        // OutputDebugString('FingerprintDecompressor::Decompress() -- Invalid fingerprint (shorter than 4 bytes)');
+        Exit;
+    end;
+    if algorithm <> 0 then
+        algorithm := Ord(fingerprint[1]);
+
+    n := (Ord(fingerprint[2]) shl 16) or (Ord(fingerprint[3]) shl 8) or (Ord(fingerprint[4]));
+    reader := TBitStringReader.Create(fingerprint);
+
+    reader.Read(8);
+    reader.Read(8);
+    reader.Read(8);
+    reader.Read(8);
+
+    if (reader.AvailableBits < n * kNormalBits) then
+    begin
+        // DEBUG("FingerprintDecompressor::Decompress() -- Invalid fingerprint (too short)");
+        reader.Free;
+        Exit;
+    end;
+
+    SetLength(FResult, n);
+
+    reader.Reset();
+    if (not ReadNormalBits(reader)) then
+    begin
+        reader.Free;
+        Exit;
+    end;
+
+    reader.Reset();
+    if (not ReadExceptionBits(reader)) then
+    begin
+        reader.Free;
+        Exit;
+    end;
+
+    UnpackBits();
+    Result := FResult;
+
+end;
+
+function TFingerprintDecompressor.ReadExceptionBits(reader: TBitStringReader): boolean;
+var
+    i: integer;
+begin
+    for i := 0 to Length(FBits) - 1 do
+    begin
+        if (FBits[i] = kMaxNormalValue) then
+        begin
+            if (reader.EOF) then
+            begin
+                // OutptuDebugString('FingerprintDecompressor.ReadExceptionBits() -- Invalid fingerprint (reached EOF while reading exception bits)');
+                Result := False;
+                Exit;
+            end;
+            FBits[i] := FBits[i] + reader.Read(kExceptionBits);
+        end;
+    end;
+    Result := True;
+end;
+
+function TFingerprintDecompressor.ReadNormalBits(reader: TBitStringReader): boolean;
+var
+    i, bit, n: integer;
+begin
+    i := 0;
+    while (i < Length(FResult)) do
+    begin
+        bit := reader.Read(kNormalBits);
+        if (bit = 0) then
+            Inc(i);
+        n := Length(FBits);
+        SetLength(FBits, n + 1);
+        FBits[n] := bit;
+    end;
+    Result := True;
+end;
+
+procedure TFingerprintDecompressor.UnpackBits;
+var
+    i, last_bit, j, bit: integer;
+    Value: uint32;
+begin
+    i := 0;
+    last_bit := 0;
+    Value := 0;
+
+    for j := 0 to Length(FBits) - 1 do
+    begin
+        bit := FBits[j];
+        if (bit = 0) then
+        begin
+            if (i > 0) then
+                FResult[i] := Value xor FResult[i - 1]
+            else
+                FResult[i] := Value;
+            Value := 0;
+            last_bit := 0;
+            Inc(i);
+            continue;
+        end;
+        bit := bit + last_bit;
+        last_bit := bit;
+        Value := Value or (1 shl (bit - 1));
+    end;
+end;
+
+end.

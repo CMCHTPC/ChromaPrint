@@ -1,0 +1,179 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Chromaprint API Test'
+  ClientHeight = 328
+  ClientWidth = 1080
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btnTestAudioProcessor: TButton
+    Left = 8
+    Top = 8
+    Width = 153
+    Height = 25
+    Caption = 'Test AudioProcessor'
+    TabOrder = 0
+    OnClick = btnTestAudioProcessorClick
+  end
+  object Memo: TMemo
+    Left = 326
+    Top = 10
+    Width = 746
+    Height = 193
+    Lines.Strings = (
+      'Memo')
+    ScrollBars = ssVertical
+    TabOrder = 1
+  end
+  object btnTestFilter: TButton
+    Left = 8
+    Top = 39
+    Width = 153
+    Height = 25
+    Caption = 'Test Filter'
+    TabOrder = 2
+    OnClick = btnTestFilterClick
+  end
+  object btnTestIntegralImage: TButton
+    Left = 8
+    Top = 70
+    Width = 153
+    Height = 25
+    Caption = 'Test Integral Image'
+    TabOrder = 3
+    OnClick = btnTestIntegralImageClick
+  end
+  object btnTestSilenceRemover: TButton
+    Left = 8
+    Top = 101
+    Width = 153
+    Height = 25
+    Caption = 'Test Silence Remover'
+    TabOrder = 4
+    OnClick = btnTestSilenceRemoverClick
+  end
+  object btnTestChromaprint: TButton
+    Left = 167
+    Top = 8
+    Width = 153
+    Height = 25
+    Caption = 'Test Chromaprint'
+    TabOrder = 5
+    OnClick = btnTestChromaprintClick
+  end
+  object btnTestCombinedBuffer: TButton
+    Left = 8
+    Top = 132
+    Width = 153
+    Height = 25
+    Caption = 'Test Combined Buffer'
+    TabOrder = 6
+    OnClick = btnTestCombinedBufferClick
+  end
+  object btnTestChromaResampler: TButton
+    Left = 8
+    Top = 163
+    Width = 153
+    Height = 25
+    Caption = 'Test Chroma Resampler'
+    TabOrder = 7
+    OnClick = btnTestChromaResamplerClick
+  end
+  object btnTestChromaFilter: TButton
+    Left = 8
+    Top = 194
+    Width = 153
+    Height = 25
+    Caption = 'Test Chroma Filter'
+    TabOrder = 8
+    OnClick = btnTestChromaFilterClick
+  end
+  object btnChromaTest: TButton
+    Left = 8
+    Top = 225
+    Width = 153
+    Height = 25
+    Caption = 'Chroma Test'
+    TabOrder = 9
+    OnClick = btnChromaTestClick
+  end
+  object btnTestBase64: TButton
+    Left = 167
+    Top = 39
+    Width = 153
+    Height = 25
+    Caption = 'Test Base64'
+    TabOrder = 10
+    OnClick = btnTestBase64Click
+  end
+  object btnTestQuantize: TButton
+    Left = 167
+    Top = 70
+    Width = 153
+    Height = 25
+    Caption = 'Test Quantize'
+    TabOrder = 11
+    OnClick = btnTestQuantizeClick
+  end
+  object btnTestFingerprintCalculator: TButton
+    Left = 167
+    Top = 101
+    Width = 153
+    Height = 25
+    Caption = 'Test Fingerprint Calculator'
+    TabOrder = 12
+    OnClick = btnTestFingerprintCalculatorClick
+  end
+  object btnFingerPrintCompressor: TButton
+    Left = 167
+    Top = 132
+    Width = 153
+    Height = 25
+    Caption = 'Test FingerPrint Compressor'
+    TabOrder = 13
+    OnClick = btnFingerPrintCompressorClick
+  end
+  object btnTestStringReader: TButton
+    Left = 167
+    Top = 194
+    Width = 153
+    Height = 25
+    Caption = 'Test BitString Reader'
+    TabOrder = 14
+    OnClick = btnTestStringReaderClick
+  end
+  object btnTestBitStringWriter: TButton
+    Left = 167
+    Top = 225
+    Width = 153
+    Height = 25
+    Caption = 'Test BitString Write'
+    TabOrder = 15
+    OnClick = btnTestBitStringWriterClick
+  end
+  object btnTestFingerprintDecompressor: TButton
+    Left = 167
+    Top = 163
+    Width = 153
+    Height = 25
+    Caption = 'Test FingerPrint Decompressor'
+    TabOrder = 16
+    OnClick = btnTestFingerprintDecompressorClick
+  end
+  object btnTestAPI: TButton
+    Left = 8
+    Top = 256
+    Width = 312
+    Height = 65
+    Caption = 'API Test'
+    TabOrder = 17
+    OnClick = btnTestAPIClick
+  end
+end

@@ -1,0 +1,158 @@
+unit CP.SilenceRemover;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.AudioConsumer, CP.Def;
+
+const
+    kSilenceWindow = SmallInt(55); // 5 ms as 11025 Hz
+
+type
+
+    { TMovingAverage }
+
+    TMovingAverage = class(TObject)
+    private
+        FBuffer: array of SmallInt; // T *
+        FSize: integer;
+        FOffset: integer;
+        FSum: integer;
+        FCount: integer;
+    public
+        constructor Create(Size: integer);
+        destructor Destroy; override;
+        procedure AddValue(const x: SmallInt);
+        function GetAverage: SmallInt;
+    end;
+
+    { TSilenceRemover }
+
+    TSilenceRemover = class(TAudioConsumer)
+    private
+        FThreshold: integer;
+        FStart: boolean;
+        FConsumer: TAudioConsumer;
+        FAverage: TMovingAverage;
+    public
+        property Threshold: integer read FThreshold write FThreshold;
+        property Consumer: TAudioConsumer read FConsumer write FConsumer;
+    public
+        constructor Create(Consumer: TAudioConsumer; Threshold: integer = 0);
+        destructor Destroy; override;
+        function Reset(SampleRate, NumChannels: integer): boolean;
+        procedure Flush;
+        procedure Consume(Input: TSmallintArray; AOffset: integer; Length: integer); override;
+    end;
+
+implementation
+
+{ TMovingAverage<T> }
+
+constructor TMovingAverage.Create(Size: integer);
+var
+    i: integer;
+begin
+    FSize := Size;
+    FOffset := 0;
+    FSum := 0;
+    FCount := 0;
+
+    SetLength(FBuffer, FSize);
+    for i := 0 to FSize - 1 do
+    begin
+        FBuffer[i] := 0;
+    end;
+end;
+
+destructor TMovingAverage.Destroy;
+begin
+    SetLength(FBuffer, 0);
+    inherited Destroy;
+end;
+
+procedure TMovingAverage.AddValue(const x: SmallInt);
+begin
+    FSum := FSum + x;
+    FSum := FSum - FBuffer[FOffset];
+    if (FCount < FSize) then
+    begin
+        Inc(FCount);
+    end;
+    FBuffer[FOffset] := x;
+    FOffset := (FOffset + 1) mod FSize;
+end;
+
+function TMovingAverage.GetAverage: SmallInt;
+begin
+    if (FCount = 0) then
+    begin
+        Result := 0;
+        Exit;
+    end;
+    Result := FSum div FCount;
+end;
+
+{ TSilenceRemover }
+
+constructor TSilenceRemover.Create(Consumer: TAudioConsumer; Threshold: integer);
+begin
+    FStart := True;
+    FThreshold := Threshold;
+    FAverage := TMovingAverage.Create(kSilenceWindow);
+    FConsumer := Consumer;
+end;
+
+destructor TSilenceRemover.Destroy;
+begin
+    FAverage.Free;
+    inherited;
+end;
+
+function TSilenceRemover.Reset(SampleRate, NumChannels: integer): boolean;
+begin
+    if NumChannels <> 1 then
+    begin
+        Result := False;
+        Exit;
+    end;
+    FStart := True;
+    Result := True;
+end;
+
+procedure TSilenceRemover.Flush;
+begin
+    { nothing to do }
+end;
+
+procedure TSilenceRemover.Consume(Input: TSmallintArray; AOffset: integer; Length: integer);
+var
+    offset, n: integer;
+begin
+    offset := 0;
+    n := Length;
+    if (FStart) then
+    begin
+        while (n > 0) do
+        begin
+            FAverage.AddValue(abs(Input[offset]));
+            if (FAverage.GetAverage() > FThreshold) then
+            begin
+                FStart := False;
+                break;
+            end;
+            Inc(offset);
+            Dec(n);
+        end;
+    end;
+    if (n > 0) then
+    begin
+        FConsumer.Consume(Input, offset, Length);
+    end;
+end;
+
+end.

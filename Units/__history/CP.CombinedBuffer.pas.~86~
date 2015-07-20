@@ -1,0 +1,205 @@
+unit CP.CombinedBuffer;
+
+interface
+
+uses
+    Classes,
+    CP.Def;
+
+type
+    TCombinedBuffer = class(TObject)
+    private
+        FOffset: integer;
+        FBuffer1, FBuffer2: TSmallintArray;
+        FSize1, FSize2: integer;
+    public
+        property Offset: integer read FOffset; // Gets the current offset of the combined buffer.
+
+    public
+        constructor Create(const Buffer1: TSmallintArray; Size1: integer; const Buffer2: TSmallintArray; Size2: integer);
+        destructor Destroy; override;
+        function Size: integer;
+        function GetValue(i: integer): smallint;
+        function Shift(Value: integer): integer;
+        function Read(var Buffer: TSmallintArray; Offset: integer; Count: integer): integer;
+        procedure Flush(var Buffer: TSmallintArray);
+    end;
+
+
+    TCombinedBuffer2 = class(TObject)
+    private
+        FOffset: integer;
+        FBuffer: TSmallintArray;
+        FSize: integer;
+    public
+        property Offset: integer read FOffset; // Gets the current offset of the combined buffer.
+    public
+        constructor Create(const Buffer1: TSmallintArray; Size1: integer; const Buffer2: TSmallintArray; Size2: integer);
+        destructor Destroy; override;
+        function Size: integer;
+        function GetValue(i: integer): smallint;
+        function Shift(Value: integer): integer;
+        function Read(var Buffer: TSmallintArray; Offset: integer; Count: integer): integer;
+        procedure Flush(var Buffer: TSmallintArray);
+    end;
+
+implementation
+
+uses
+    Math,Windows
+    {$IFDEF FPC}
+    , DaMath
+{$ENDIF}    ;
+
+{ TCombinedBuffer }
+
+constructor TCombinedBuffer.Create(const Buffer1: TSmallintArray; Size1: integer; const Buffer2: TSmallintArray; Size2: integer);
+begin
+    FOffset := 0;
+    FBuffer1 := Buffer1;
+    FBuffer2 := Buffer2;
+    FSize1 := Size1;
+    FSize2 := Size2;
+end;
+
+
+
+destructor TCombinedBuffer.Destroy;
+begin
+    inherited;
+end;
+
+// Read all remaining values from the buffer.
+
+procedure TCombinedBuffer.Flush(var Buffer: TSmallintArray);
+var
+    lTempBuffer: TSmallintArray;
+    lSize: integer;
+begin
+    // Read the whole buffer (offset will be taken care of).
+    lSize:=Size;
+    if lSize > 0 then
+    begin
+        Read(Buffer, 0, lSize);
+    end;
+end;
+
+// Gets the element at given position.
+
+function TCombinedBuffer.GetValue(i: integer): smallint;
+var
+    k: integer;
+begin
+    k := i + FOffset;
+    if k < FSize1 then
+        Result := FBuffer1[k]
+    else
+    begin
+        k := k - FSize1;
+        Result := FBuffer2[k];
+    end;
+end;
+
+
+
+function TCombinedBuffer.Read(var Buffer: TSmallintArray; Offset, Count: integer): integer;
+var
+    n: integer;
+    pos: integer;
+    lSplit: integer;
+begin
+    pos := FOffset + Offset;
+    if (pos < FSize1) and (pos + Count > FSize1) then
+    begin
+        { read from first and seconde buffer }
+        // Number of shorts to be read from first buffer
+        lSplit := FSize1 - pos;
+        // Number of shorts to be read from second buffer
+        n := Math.Min(Count - lSplit, FSize2);
+        // Copy from both buffers
+      //  SetLength(Buffer, n + lSplit);
+        if (FBuffer1=nil) or (FBuffer2=nil) then
+           OutputDebugString('shit');
+        Move(FBuffer1[pos], Buffer[0], lSplit * SizeOf(smallint));
+        Move(FBuffer2[0], Buffer[lSplit], n * SizeOf(smallint));
+        // Correct total length
+        n := n + lSplit;
+    end
+    else
+    begin
+        if pos > FSize1 then
+        begin
+            { read from seconde buffer }
+            pos := pos - FSize1;
+            // Number of shorts to be read from second buffer
+            n := Math.Min(Count, FSize2 - pos);
+            // Read from second buffer
+//            SetLength(Buffer, n);
+            Move(FBuffer2[pos], Buffer[0], n * SizeOf(smallint));
+        end
+        else
+        begin
+            n := Math.Min(Count, FSize1 - pos); // here not safe in C++ and C#
+//            SetLength(Buffer, n);
+            Move(FBuffer1[pos], Buffer[0], n * SizeOf(smallint));
+        end;
+    end;
+    Result := n;
+end;
+
+// Shift the buffer offset.
+
+function TCombinedBuffer.Shift(Value: integer): integer;
+begin
+    FOffset := FOffset + Value;
+    Result := FOffset;
+end;
+
+// Gets the size of the combined buffer.
+
+function TCombinedBuffer.Size: integer;
+begin
+    Result := FSize1 + FSize2 - FOffset;
+end;
+
+{ TCombinedBuffer2 }
+
+constructor TCombinedBuffer2.Create(const Buffer1: TSmallintArray; Size1: integer; const Buffer2: TSmallintArray; Size2: integer);
+begin
+    SetLength(FBuffer,Size1+Size2);
+    Move(Buffer1[0],FBuffer[0],Size1);
+    Move(Buffer2[0],FBuffer[Size1],Size2);
+end;
+
+destructor TCombinedBuffer2.Destroy;
+begin
+ SetLength(FBuffer,0);
+  inherited;
+end;
+
+procedure TCombinedBuffer2.Flush(var Buffer: TSmallintArray);
+begin
+
+end;
+
+function TCombinedBuffer2.GetValue(i: integer): smallint;
+begin
+   result:=FBuffer[i];
+end;
+
+function TCombinedBuffer2.Read(var Buffer: TSmallintArray; Offset, Count: integer): integer;
+begin
+
+end;
+
+function TCombinedBuffer2.Shift(Value: integer): integer;
+begin
+
+end;
+
+function TCombinedBuffer2.Size: integer;
+begin
+
+end;
+
+end.

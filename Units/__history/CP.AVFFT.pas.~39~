@@ -1,0 +1,94 @@
+unit CP.AVFFT;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def, CP.FFT,
+    { ffMPEG - libAV }
+    libavcodec_avfft;
+
+type
+
+    { TFFTAV }
+
+    TFFTAV = class(TFFTLib)
+    private
+        m_rdft_ctx: PRDFTContext;
+        FInput: PFFTSample;
+
+    public
+        constructor Create(frame_size: integer; window: TDoubleArray);
+        destructor Destroy; override;
+        procedure ComputeFrame(input: TSmallintArray; frame: TFFTFrame); override;
+    end;
+
+implementation
+
+uses
+    libavutil_mem;
+
+procedure ApplyWindow(Data:PFFTSample; window: TDoubleArray; size: integer; scale: double);
+var
+    i: integer;
+begin
+    i := 0;
+    while (i < size) do
+    begin
+        TSingleArray(Data)[i] := TSingleArray(Data)[i] * window[i] * scale;
+        Inc(i);
+    end;
+
+end;
+
+{ TFFTAV }
+
+procedure TFFTAV.ComputeFrame(input: TSmallintArray; frame: TFFTFrame);
+var
+   i: Integer;
+begin
+    ApplyWindow(FInput, FWindow, FFrameSize, 1.0);
+
+	av_rdft_calc(m_rdft_ctx, FInput);
+    frame.Data[0] := TSingleArray(FInput)[0] * TSingleArray(FInput)[0];
+    frame.Data[FFrameSizeH] := TSingleArray(FInput)[1] * TSingleArray(FInput)[1];
+    for i := 1 to FFrameSizeH - 1 do
+    begin
+        frame.Data[i] := TSingleArray(FInput)[2 * i] * TSingleArray(FInput)[2 * i] + TSingleArray(FInput)[2 * i + 1] * TSingleArray(FInput)[2 * i + 1];
+    end;
+
+end;
+
+constructor TFFTAV.Create(frame_size: integer; window: TDoubleArray);
+var
+    bits: integer;
+begin
+    FFrameSize := frame_size;
+    FFrameSizeH := frame_size div 2;
+    FWindow := window;
+
+   // SetLength(FInput, frame_size);
+    FInput := av_mallocz(sizeof(single) * frame_size);
+
+    bits := -1;
+    while frame_size > 0 do
+    begin
+        inc(bits);
+        frame_size := frame_size shr 1;
+    end;
+    m_rdft_ctx := av_rdft_init(bits, DFT_R2C);
+end;
+
+destructor TFFTAV.Destroy;
+begin
+    av_rdft_end(m_rdft_ctx);
+    av_free(FInput);
+
+    SetLength(FWindow, 0);
+    inherited;
+end;
+
+end.

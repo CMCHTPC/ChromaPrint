@@ -1,0 +1,187 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{8B411ECF-489A-491F-88A0-80244FF0DDBF}</ProjectGuid>
+			<ProjectVersion>13.4</ProjectVersion>
+			<MainSource>ChromaTest.dpr</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<FrameworkType>VCL</FrameworkType>
+			<Base>True</Base>
+			<Platform Condition="'$(Platform)'==''">Win32</Platform>
+			<TargetedPlatforms>1</TargetedPlatforms>
+			<AppType>Application</AppType>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Basis' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<VerInfo_Locale>1031</VerInfo_Locale>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+			<DCC_DependencyCheckOutputName>ChromaTest.exe</DCC_DependencyCheckOutputName>
+			<DCC_K>false</DCC_K>
+			<DCC_F>false</DCC_F>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_Platform>x86</DCC_Platform>
+			<DCC_N>false</DCC_N>
+			<DCC_S>false</DCC_S>
+			<DCC_E>false</DCC_E>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_MapFile>3</DCC_MapFile>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="ChromaTest.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="MainUnit.pas">
+				<Form>APITestForm</Form>
+			</DCCReference>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\FFTypes.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavcodec.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavcodec_avfft.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavdevice.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavfilter.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavfilter_avcodec.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavfilter_buffersink.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavfilter_buffersrc.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavfilter_formats.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavformat.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavformat_avio.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavformat_url.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_audio_fifo.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_avstring.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_bprint.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_buffer.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_channel_layout.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_common.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_cpu.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_dict.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_error.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_eval.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_fifo.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_file.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_frame.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_imgutils.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_log.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_mathematics.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_md5.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_mem.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_motion_vector.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_opt.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_parseutils.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_pixdesc.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_pixfmt.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_rational.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_samplefmt.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_time.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libavutil_timestamp.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libswresample.pas"/>
+			<DCCReference Include="F:\External\ffmpeg-delphi-pascal-headers-2.5.4\headers\libswscale.pas"/>
+			<DCCReference Include="..\..\Units\CP.Utils.pas"/>
+			<DCCReference Include="..\..\Units\CP.TestUtils.pas"/>
+			<DCCReference Include="..\..\Units\CP.SilenceRemover.pas"/>
+			<DCCReference Include="..\..\Units\CP.Resampler.pas"/>
+			<DCCReference Include="..\..\Units\CP.Quantizer.pas"/>
+			<DCCReference Include="..\..\Units\CP.LomontFFT.pas"/>
+			<DCCReference Include="..\..\Units\CP.IntegralImage.pas"/>
+			<DCCReference Include="..\..\Units\CP.Imagebuilder.pas"/>
+			<DCCReference Include="..\..\Units\CP.Image.pas"/>
+			<DCCReference Include="..\..\Units\CP.FingerprinterConfiguration.pas"/>
+			<DCCReference Include="..\..\Units\CP.FingerprintCompressor.pas"/>
+			<DCCReference Include="..\..\Units\CP.FingerprintCalculator.pas"/>
+			<DCCReference Include="..\..\Units\CP.Fingerprint.pas"/>
+			<DCCReference Include="..\..\Units\CP.Filter.pas"/>
+			<DCCReference Include="..\..\Units\CP.FFT.pas"/>
+			<DCCReference Include="..\..\Units\CP.FeatureVectorConsumer.pas"/>
+			<DCCReference Include="..\..\Units\CP.Def.pas"/>
+			<DCCReference Include="..\..\Units\CP.CombinedBuffer.pas"/>
+			<DCCReference Include="..\..\Units\CP.Classifier.pas"/>
+			<DCCReference Include="..\..\Units\CP.ChromaPrint.pas"/>
+			<DCCReference Include="..\..\Units\CP.Chroma.pas"/>
+			<DCCReference Include="..\..\Units\CP.BitString.pas"/>
+			<DCCReference Include="..\..\Units\CP.Base64.pas"/>
+			<DCCReference Include="..\..\Units\CP.AVFFT.pas"/>
+			<DCCReference Include="..\..\Units\CP.AudioProcessor.pas"/>
+			<DCCReference Include="..\..\Units\CP.AudioConsumer.pas"/>
+			<DCCReference Include="..\..\Units\CP.AudioBuffer.pas"/>
+			<BuildConfiguration Include="Basis">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">ChromaTest.dpr</Source>
+					</Source>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1031</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win64">False</Platform>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

@@ -1,0 +1,184 @@
+object APITestForm: TAPITestForm
+  Left = 238
+  Height = 428
+  Top = 254
+  Width = 874
+  Caption = 'APITestForm'
+  ClientHeight = 428
+  ClientWidth = 874
+  OnCreate = FormCreate
+  LCLVersion = '1.3'
+  object Memo: TMemo
+    Left = 328
+    Height = 240
+    Top = 8
+    Width = 520
+    Lines.Strings = (
+      'InfoMemo'
+    )
+    ScrollBars = ssVertical
+    TabOrder = 1
+  end
+  object btnTestAudioProcessor: TButton
+    Left = 8
+    Height = 25
+    Top = 8
+    Width = 153
+    Caption = 'Test AudioProcessor'
+    OnClick = btnTestAudioProcessorClick
+    TabOrder = 0
+  end
+  object btnTestFilter: TButton
+    Left = 8
+    Height = 25
+    Top = 39
+    Width = 153
+    Caption = 'Test Filter'
+    OnClick = btnTestFilterClick
+    TabOrder = 2
+  end
+  object btnTestIntegralImage: TButton
+    Left = 8
+    Height = 25
+    Top = 70
+    Width = 153
+    Caption = 'Test Integral Image'
+    OnClick = btnTestIntegralImageClick
+    TabOrder = 3
+  end
+  object btnTestSilenceRemover: TButton
+    Left = 8
+    Height = 25
+    Top = 101
+    Width = 153
+    Caption = 'Test Silence Remover'
+    OnClick = btnTestSilenceRemoverClick
+    TabOrder = 4
+  end
+  object btnTestChromaprint: TButton
+    Left = 167
+    Height = 25
+    Top = 8
+    Width = 153
+    Caption = 'Test Chromaprint'
+    OnClick = btnTestChromaprintClick
+    TabOrder = 5
+  end
+  object btnTestCombinedBuffer: TButton
+    Left = 8
+    Height = 25
+    Top = 132
+    Width = 153
+    Caption = 'Test Combined Buffer'
+    OnClick = btnTestCombinedBufferClick
+    TabOrder = 6
+  end
+  object btnTestChromaResampler: TButton
+    Left = 8
+    Height = 25
+    Top = 163
+    Width = 153
+    Caption = 'Test Chroma Resampler'
+    OnClick = btnTestChromaResamplerClick
+    TabOrder = 7
+  end
+  object btnTestChromaFilter: TButton
+    Left = 8
+    Height = 25
+    Top = 194
+    Width = 153
+    Caption = 'Test Chroma Filter'
+    OnClick = btnTestChromaFilterClick
+    TabOrder = 8
+  end
+  object btnChromaTest: TButton
+    Left = 8
+    Height = 25
+    Top = 225
+    Width = 153
+    Caption = 'Chroma Test'
+    OnClick = btnChromaTestClick
+    TabOrder = 9
+  end
+  object btnTestBase64: TButton
+    Left = 167
+    Height = 25
+    Top = 39
+    Width = 153
+    Caption = 'Test Base64'
+    OnClick = btnTestBase64Click
+    TabOrder = 10
+  end
+  object btnTestQuantize: TButton
+    Left = 167
+    Height = 25
+    Top = 70
+    Width = 153
+    Caption = 'Test Quantize'
+    OnClick = btnTestQuantizeClick
+    TabOrder = 11
+  end
+  object btnTestFingerprintCalculator: TButton
+    Left = 167
+    Height = 25
+    Top = 101
+    Width = 153
+    Caption = 'Test Fingerprint Calculator'
+    OnClick = btnTestFingerprintCalculatorClick
+    TabOrder = 12
+  end
+  object btnFingerPrintCompressor: TButton
+    Left = 167
+    Height = 25
+    Top = 132
+    Width = 153
+    Caption = 'Test FingerPrint Compressor'
+    OnClick = btnFingerPrintCompressorClick
+    TabOrder = 13
+  end
+  object btnTestStringReader: TButton
+    Left = 167
+    Height = 25
+    Top = 194
+    Width = 153
+    Caption = 'Test BitString Reader'
+    OnClick = btnTestStringReaderClick
+    TabOrder = 14
+  end
+  object btnTestBitStringWriter: TButton
+    Left = 167
+    Height = 25
+    Top = 225
+    Width = 153
+    Caption = 'Test BitString Write'
+    OnClick = btnTestBitStringWriterClick
+    TabOrder = 15
+  end
+  object btnTestFingerprintDecompressor: TButton
+    Left = 167
+    Height = 25
+    Top = 163
+    Width = 153
+    Caption = 'Test FingerPrint Decompressor'
+    OnClick = btnTestFingerprintDecompressorClick
+    TabOrder = 16
+  end
+  object btnTestAPI: TButton
+    Left = 8
+    Height = 65
+    Top = 299
+    Width = 312
+    Caption = 'API Test'
+    OnClick = btnTestAPIClick
+    TabOrder = 17
+  end
+  object btnMovingAverage: TButton
+    Left = 8
+    Height = 25
+    Top = 256
+    Width = 153
+    Caption = 'Moving Average'
+    OnClick = btnMovingAverageClick
+    TabOrder = 18
+  end
+end

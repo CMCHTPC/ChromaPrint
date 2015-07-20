@@ -1,0 +1,31 @@
+unit CP.AudioConsumer;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def;
+
+type
+
+    { TAudioConsumer }
+
+    TAudioConsumer = class(TObject)
+    public
+        procedure Consume(Input: TSmallintArray; AOffset: integer; ALength: integer); virtual; abstract; // eigentlich abstract
+        destructor Destroy; override;
+    end;
+
+implementation
+
+{ TAudioConsumer }
+
+destructor TAudioConsumer.Destroy;
+begin
+    inherited Destroy;
+end;
+
+end.

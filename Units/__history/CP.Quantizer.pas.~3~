@@ -1,0 +1,62 @@
+unit CP.Quantizer;
+
+{$IFDEF FPC}
+{$mode delphi}
+{$ENDIF}
+
+
+interface
+
+uses
+    Classes, SysUtils;
+
+type
+
+    { TQuantizer }
+
+    TQuantizer = class(TObject)
+    private
+        m_t0, m_t1, m_t2: double;
+    public
+        property t0: double read m_t0 write m_t0;
+        property t1: double read m_t1 write m_t1;
+        property t2: double read m_t2 write m_t2;
+    public
+        constructor Create(t0: double = 0.0; t1: double = 0.0; t2: double = 0.0);
+        function Quantize(Value: double): integer;
+    end;
+
+implementation
+
+{ TQuantizer }
+
+constructor TQuantizer.Create(t0: double; t1: double; t2: double);
+begin
+    m_t0 := t0;
+    m_t1 := t1;
+    m_t2 := t2;
+
+    //    assert((t0 <= t1) and (t1 <= t2));
+end;
+
+
+
+function TQuantizer.Quantize(Value: double): integer;
+begin
+    if (Value < m_t1) then
+    begin
+        if (Value < m_t0) then
+            Result := 0
+        else
+            Result := 1;
+    end
+    else
+    begin
+        if (Value < m_t2) then
+            Result := 2
+        else
+            Result := 3;
+    end;
+end;
+
+end.

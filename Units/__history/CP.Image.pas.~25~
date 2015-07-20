@@ -1,0 +1,92 @@
+unit CP.Image;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def;
+
+type
+    { TImage }
+
+    TImage = class
+    private
+        FColumns: integer;
+        FRows: integer;
+        { this is m_data[row,column] }
+        FData: array of array of Double; // a big array of doubles :)
+
+    public
+        property NumRows: integer read FRows;
+        property NumColumns: integer read FColumns;
+    public
+        constructor Create(columns: integer; rows: integer = 0);
+        destructor Destroy; override;
+        procedure AddRow(Row: TDoubleArray);
+        function GetData(Row, Column: integer): Double;
+        procedure SetData(Row, Column: integer; Value: Double);
+    end;
+
+implementation
+
+{ TImage }
+
+constructor TImage.Create(columns: integer; rows: integer = 0);
+var
+    i: integer;
+begin
+    m_columns := columns; // 12 Spalten 0...x reihen (variabel);
+    FRows := rows;
+    // dimensioniere die daten richtig
+    SetLength(FData, FRows);
+    if FRows > 0 then
+    begin
+        for i := 0 to FRows - 1 do
+        begin
+            SetLength(FData[i], m_columns);
+        end;
+    end;
+end;
+
+destructor TImage.Destroy;
+var
+    i: integer;
+begin
+    for i := 0 to FRows - 1 do
+    begin
+        SetLength(FData[i], 0);
+    end;
+    SetLength(FData, 0);
+    inherited;
+end;
+
+procedure TImage.AddRow(Row: TDoubleArray);
+var
+    i: integer;
+begin
+    // add a row and copy the values
+    inc(FRows);
+    SetLength(FData, FRows);
+    SetLength(FData[FRows - 1], m_columns);
+
+    for i := 0 to m_columns - 1 do
+    begin
+        FData[FRows - 1, i] := Row[i];
+    end;
+
+end;
+
+function TImage.GetData(Row, Column: integer): Double;
+begin
+    result := FData[Row][Column];
+end;
+
+procedure TImage.SetData(Row, Column: integer; Value: Double);
+begin
+    FData[Row][Column] := Value;
+end;
+
+end.

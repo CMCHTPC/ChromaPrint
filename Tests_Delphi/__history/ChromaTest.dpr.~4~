@@ -1,0 +1,38 @@
+program ChromaTest;
+
+uses
+  Forms,
+  MainUnit in 'MainUnit.pas' {Form1},
+  ChromaPrint in '..\Units\ChromaPrint.pas',
+  CP.AudioConsumer in '..\Units\CP.AudioConsumer.pas',
+  CP.AudioProcessor in '..\Units\CP.AudioProcessor.pas',
+  CP.Base64 in '..\Units\CP.Base64.pas',
+  CP.Chroma in '..\Units\CP.Chroma.pas',
+  CP.Classifier in '..\Units\CP.Classifier.pas',
+  CP.Def in '..\Units\CP.Def.pas',
+  CP.FeatureVectorConsumer in '..\Units\CP.FeatureVectorConsumer.pas',
+  CP.FFT in '..\Units\CP.FFT.pas',
+  CP.Filter in '..\Units\CP.Filter.pas',
+  CP.Fingerprint in '..\Units\CP.Fingerprint.pas',
+  CP.FingerprintCompressor in '..\Units\CP.FingerprintCompressor.pas',
+  CP.Image in '..\Units\CP.Image.pas',
+  CP.LomontFFT in '..\Units\CP.LomontFFT.pas',
+  CP.Quantizer in '..\Units\CP.Quantizer.pas',
+  CP.Resampler in '..\Units\CP.Resampler.pas',
+  CP.SilenceRemover in '..\Units\CP.SilenceRemover.pas',
+  CP.Utils in '..\Units\CP.Utils.pas',
+  FingerprinterConfiguration in '..\Units\FingerprinterConfiguration.pas',
+  IntegralImage in '..\Units\IntegralImage.pas',
+  Resample2 in '..\Units\Resample2.pas',
+  CP.Imagebuilder in '..\Units\CP.Imagebuilder.pas',
+  CP.FingerprintCalculator in '..\Units\CP.FingerprintCalculator.pas',
+  CP.AudioBuffer in '..\Units\CP.AudioBuffer.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

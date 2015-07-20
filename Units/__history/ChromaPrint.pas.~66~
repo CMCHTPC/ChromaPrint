@@ -1,0 +1,187 @@
+unit ChromaPrint;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    FingerprinterConfiguration, CP.Resampler,
+    IntegralImage, CP.FFT,
+    CP.Classifier, CP.FeatureVectorConsumer, CP.SilenceRemover, CP.AudioConsumer,
+    CP.AudioProcessor, CP.Chroma, CP.Fingerprint,
+    CP.Image, CP.Def;
+
+type
+
+    // Fingerprinter = class;
+
+    TChromaprintContext = record
+        algorithm: TChromaprintAlgorithm;
+        fingerprinter: TFingerprinter;
+        Fingerprint: TUINT32Array; // PINT32; // array of INT32; // also PINT32 ???
+    end;
+
+    // PChromaprintContextPrivate = ^TChromaprintContextPrivate;
+
+    { TChromaPrint }
+
+    TChromaPrint = class(TObject)
+    private
+        ctx: TChromaprintContext;
+    public
+        // Return the version number of Chromaprint.
+        function Version: PWideChar;
+        procedure ChromaprintNew(algorithm: TChromaprintAlgorithm);
+        procedure ChromaprintFree;
+        function GetAlgorithm: TChromaprintAlgorithm;
+        function SetOption(const Name: PWideChar; Value: integer): integer;
+        function Start(sample_rate: integer; num_channels: integer): integer;
+        function Feed(Data: TSmallintArray; length: integer): integer;
+        function Finish: integer;
+        function GetFingerprint(out Fingerprint: string): integer;
+        function GetRawFingerprint(out Fingerprint: TUINT32Array; out Size: integer): integer;
+        function EnocdeFingerprint(RawFP: TUINT32Array; algorithm: integer; Out EncodedFP: string; out EncodedSize: integer; Base64: boolean): integer;
+        function DecodeFingerprint(encoded: string; uncompressed: TSmallintArray; out algorithm: integer; Base64: boolean): integer;
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+implementation
+
+uses
+    CP.Utils, CP.Base64, CP.FingerprintCompressor,
+
+    Math;
+
+{ TChromaPrint }
+
+function TChromaPrint.Version: PWideChar;
+begin
+    Result := PWideChar(IntToStr(CHROMAPRINT_VERSION_MAJOR) + '.' + IntToStr(CHROMAPRINT_VERSION_MINOR) + '.' + IntToStr(CHROMAPRINT_VERSION_PATCH));
+end;
+
+procedure TChromaPrint.ChromaprintNew(algorithm: TChromaprintAlgorithm); stdcall;
+begin
+    ctx.algorithm := algorithm;
+    if ctx.fingerprinter <> nil then
+        ctx.fingerprinter.Free;
+    ctx.fingerprinter := TFingerprinter.Create(CreateFingerprinterConfiguration(algorithm));
+end;
+
+procedure TChromaPrint.ChromaprintFree;
+begin
+    SetLength(ctx.Fingerprint, 0);
+    // Dispose(ctx.Fingerprint);
+    ctx.fingerprinter.Free;
+end;
+
+function TChromaPrint.GetAlgorithm: TChromaprintAlgorithm;
+begin
+    Result := ctx.algorithm;
+end;
+
+function TChromaPrint.SetOption(const Name: PWideChar; Value: integer): integer;
+begin
+    if ctx.fingerprinter.SetOption(Name, Value) then
+        Result := 1
+    else
+        Result := 0;
+end;
+
+function TChromaPrint.Start(sample_rate: integer; num_channels: integer): integer;
+begin
+    if ctx.fingerprinter.Start(sample_rate, num_channels) then
+        Result := 1
+    else
+        Result := 0;
+end;
+
+function TChromaPrint.Feed(Data: TSmallintArray; length: integer): integer;
+begin
+    // data: raw audio data, should point to an array of 16-bit signed integers in native byte-order
+    ctx.fingerprinter.Consume(Data, 0, length);
+    Result := 1;
+end;
+
+function TChromaPrint.Finish: integer;
+begin
+    ctx.Fingerprint := ctx.fingerprinter.Finish;
+    Result := 1;
+end;
+
+function TChromaPrint.GetFingerprint(out Fingerprint: string): integer;
+var
+    fp: string;
+begin
+    Fingerprint := Base64Encode(CompressFingerprint(ctx.Fingerprint, Ord(ctx.algorithm)));
+    Result := 1;
+end;
+
+function TChromaPrint.GetRawFingerprint(out Fingerprint: TUINT32Array; out Size: integer): integer;
+
+var
+    lSize: integer;
+begin
+    { lSize := length(ctx.Fingerprint);
+      SetLength(Fingerprint, lSize);
+      Size := lSize;
+      Move(ctx.Fingerprint, Fingerprint, SizeOf(ctx.Fingerprint));
+      }
+    Fingerprint := ctx.Fingerprint;
+    Size := length(ctx.Fingerprint);
+    Result := 1;
+end;
+
+function TChromaPrint.EnocdeFingerprint(RawFP: TUINT32Array; algorithm: integer; out EncodedFP: string; out EncodedSize: integer; Base64: boolean): integer;
+  stdcall;
+var
+    uncompressed: PINT32;
+    compressed: string;
+begin
+    compressed := CompressFingerprint(RawFP, algorithm);
+    if not Base64 then
+    begin
+        EncodedFP := compressed;
+        EncodedSize := length(EncodedFP);
+        Result := 1;
+    end
+    else
+    begin
+        EncodedFP := Base64Encode(compressed);
+        EncodedSize := length(EncodedFP);
+        Result := 1;
+    end;
+end;
+
+constructor TChromaPrint.Create;
+begin
+
+end;
+
+function TChromaPrint.DecodeFingerprint(encoded: string; uncompressed: TSmallintArray; out algorithm: integer; Base64: boolean): integer;
+var
+    lCompressed: string;
+begin
+    if Base64 then
+        lCompressed := Base64Decode(encoded)
+    else
+        lCompressed := encoded;
+
+    uncompressed := DecompressFingerprint(lCompressed, algorithm);
+end;
+
+destructor TChromaPrint.Destroy;
+begin
+    SetLength(ctx.Fingerprint, 0);
+    { if ctx.Fingerprint<>nil then
+      Dispose(ctx.Fingerprint); }
+
+    if ctx.fingerprinter <> nil then
+        ctx.fingerprinter.Free;
+    inherited Destroy;
+end;
+
+end.

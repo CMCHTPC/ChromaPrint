@@ -1,0 +1,145 @@
+unit CP.BitString;
+
+interface
+
+uses
+    Classes, SysUtils;
+
+type
+    TBitStringWriter = class(TObject)
+    private
+        FValue: string;
+        FBuffer: uint32;
+        FBufferSize: integer;
+    public
+        property Value: string read FValue;
+    public
+        constructor Create;
+        Destructor Destroy; override;
+        procedure Flush;
+        procedure Write(x: uint32; bits: integer);
+    end;
+
+    TBitStringReader = class(TObject)
+    private
+        FValue: string;
+        m_value_iter: integer;
+        FBuffer: uint32;
+        FBufferSize: integer;
+        FEOF: boolean;
+        function GetAvailableBits: integer;
+    public
+        property EOF: boolean read FEOF;
+        property AvailableBits: integer read GetAvailableBits;
+    public
+        constructor Create(input: string);
+        destructor Destroy; override;
+        procedure Reset;
+        function Read(bits: integer): uint32;
+    end;
+
+implementation
+
+{ TBitStringWriter }
+
+constructor TBitStringWriter.Create;
+begin
+    FBuffer := 0;
+    m_buffer_size := 0;
+    FValue := '';
+end;
+
+destructor TBitStringWriter.Destroy;
+begin
+
+    inherited;
+end;
+
+procedure TBitStringWriter.Flush;
+begin
+    // C++ is pain
+    while (m_buffer_size > 0) do
+    begin
+        FValue := FValue + chr(FBuffer AND 255);
+        FBuffer := FBuffer shr 8; // ???
+        m_buffer_size := m_buffer_size - 8;
+    end;
+    m_buffer_size := 0;
+end;
+
+procedure TBitStringWriter.Write(x: uint32; bits: integer);
+begin
+    FBuffer := FBuffer or (x shl m_buffer_size);
+    m_buffer_size := m_buffer_size + bits;
+    while (m_buffer_size >= 8) do
+    begin
+        FValue := FValue + chr(FBuffer AND 255);
+        FBuffer := FBuffer shr 8;
+        m_buffer_size := m_buffer_size - 8;
+    end;
+end;
+
+{ TBitStringReader }
+
+constructor TBitStringReader.Create(input: string);
+begin
+    FValue := input;
+    FBuffer := 0;
+    FBufferSize := 0;
+    FEOF := false;
+    m_value_iter := 1;
+end;
+
+destructor TBitStringReader.Destroy;
+begin
+
+    inherited;
+end;
+
+function TBitStringReader.GetAvailableBits: integer;
+begin
+    if FEOF then
+        result := 0
+    else
+    begin
+        result := FBufferSize + 8 * (Length(FValue) - m_value_iter + 1);
+    end;
+end;
+
+function TBitStringReader.Read(bits: integer): uint32;
+var
+    valueb: byte;
+begin
+    if (FBufferSize < bits) then
+    begin
+        if (m_value_iter <= Length(FValue)) then
+        begin
+            valueb := ord(FValue[m_value_iter]);
+            FBuffer := FBuffer or (valueb shl FBufferSize); // C++ is pain
+            inc(m_value_iter);
+            FBufferSize := FBufferSize + 8;
+        end
+        else
+        begin
+            FEOF := true;
+        end;
+    end;
+
+    result := FBuffer AND ((1 shl bits) - 1);
+    FBuffer := FBuffer shr bits;
+    FBufferSize := FBufferSize - bits;
+
+    if (FBufferSize <= 0) and (m_value_iter > Length(FValue)) then
+    begin
+        FEOF := true;
+    end;
+
+end;
+
+procedure TBitStringReader.Reset;
+begin
+    FBuffer := 0;
+    FBufferSize := 0;
+end;
+
+end.

@@ -1,0 +1,59 @@
+unit CP.Imagebuilder;
+
+interface
+
+ uses
+    Classes,
+    CP.Def,CP.FeatureVectorConsumer,CP.Image;
+
+
+type
+ { TImageBuilder }
+
+    TImageBuilder = class(TFeatureVectorConsumer)
+    private
+        m_image: TImage;
+    public
+        property Image: TImage read m_image write m_image;
+    public
+        constructor Create(image: TImage = nil);
+        destructor Destroy; override;
+        procedure Reset(image: TImage);
+        procedure Consume(features: PDoubleArray); override;
+    end;
+
+implementation
+
+
+
+{ TImageBuilder }
+
+constructor TImageBuilder.Create(image: TImage);
+begin
+    m_image := image;
+end;
+
+
+
+destructor TImageBuilder.Destroy;
+begin
+    m_image:=nil;
+    inherited Destroy;
+end;
+
+
+
+procedure TImageBuilder.Reset(image: TImage);
+begin
+    m_image := image;
+end;
+
+procedure TImageBuilder.Consume(features: PDoubleArray);
+begin
+  m_image.AddRow(features);
+end;
+
+
+
+
+end.

@@ -1,0 +1,90 @@
+unit CP.FingerprintCalculator;
+
+interface
+
+uses
+    Classes,
+    CP.Def,
+    CP.Classifier, CP.Image, CP.IntegralImage;
+
+type
+
+    { TFingerprintCalculator }
+
+    TFingerprintCalculator = class
+    private
+       // FNumClassifiers: integer;
+        m_max_filter_width: integer;
+        FClassifiers: TClassifierArray;
+    public
+        constructor Create(classifiers: TClassifierArray);
+        destructor Destroy; override;
+        function Calculate(Image: TImage): TUINT32Array;
+        function CalculateSubfingerprint(Image: TIntegralImage; offset: integer): UInt32;
+    end;
+
+implementation
+
+uses
+    CP.Utils, Math;
+
+{ TFingerprintCalculator }
+
+constructor TFingerprintCalculator.Create(classifiers: TClassifierArray; num_classifiers: integer);
+var
+    i: integer;
+    n: integer;
+begin
+    FClassifiers := classifiers;
+    n:=Length( FClassifiers);
+    m_max_filter_width := 0;
+    for i := 0 to n - 1 do
+    begin
+        m_max_filter_width := max(m_max_filter_width, FClassifiers[i].filter.Width);
+    end;
+end;
+
+destructor TFingerprintCalculator.Destroy;
+begin
+
+    inherited;
+end;
+
+function TFingerprintCalculator.Calculate(Image: TImage): TUINT32Array;
+var
+    lLength: integer;
+    i: integer;
+    lIntegralImage: TIntegralImage;
+begin
+    lLength := Image.NumRows - m_max_filter_width + 1;
+    if (lLength <= 0) then
+    begin
+        { DEBUG("Chromaprint::FingerprintCalculator::Calculate() -- Not "
+          << "enough data. Image has " << image->NumRows() << " rows, "
+          << "needs at least " << m_max_filter_width << " rows."); }
+        Result := nil; // vector<int32_t>();
+        Exit;
+    end;
+    lIntegralImage := TIntegralImage.Create(Image);
+    SetLength(Result, lLength);
+    for i := 0 to lLength - 1 do
+    begin
+        Result[i] := CalculateSubfingerprint(lIntegralImage, i);
+    end;
+    lIntegralImage.Free;
+end;
+
+function TFingerprintCalculator.CalculateSubfingerprint(Image: TIntegralImage; offset: integer): UInt32;
+var
+    bits: UInt32;
+    i: integer;
+begin
+    bits := 0;
+    for i := 0 to FNumClassifiers - 1 do
+    begin
+        bits := (bits shl 2) or GrayCode(TClassifierArray(FClassifiers)[i].Classify(Image, offset));
+    end;
+    Result := bits;
+end;
+
+end.

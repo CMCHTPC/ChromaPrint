@@ -1,0 +1,61 @@
+unit CP.AudioBuffer;
+
+interface
+
+uses
+    Classes,
+    CP.Def,CP.AudioConsumer;
+
+type
+
+TAudioBuffer = class (TAudioConsumer)
+private
+    m_data: TSmallintArray;
+public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Consume(Input: TSmallintArray; AOffset:integer; ALength: integer); override; // eigentlich abstract
+    function Data: TSmallintArray;
+    procedure Reset;
+end;
+
+implementation
+
+{ TAudioBuffer }
+
+procedure TAudioBuffer.Consume(Input: TSmallintArray;AOffset:integer;  ALength: integer);
+var
+    i,n: integer;
+begin
+    n:= Length(m_data);
+    SetLength(m_data,n+ALength-AOffset+1);
+    for i := AOffset to ALength - 1 do
+    begin
+        m_data[n+i-AOffset]:=Input[i];
+    end;
+
+
+end;
+
+constructor TAudioBuffer.Create;
+begin
+   SetLength(m_data,0);
+end;
+
+function TAudioBuffer.Data: TSmallintArray;
+begin
+   result:=m_data;
+end;
+
+destructor TAudioBuffer.Destroy;
+begin
+  SetLength(m_data,0);
+  inherited;
+end;
+
+procedure TAudioBuffer.Reset;
+begin
+   SetLength(m_data,0);
+end;
+
+end.

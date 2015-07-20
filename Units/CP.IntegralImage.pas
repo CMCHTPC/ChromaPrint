@@ -1,0 +1,154 @@
+{$REGION 'Copyright (C) CMC Development Team'}
+{ **************************************************************************
+  Copyright (C) 2015 CMC Development Team
+
+  CMC is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  CMC is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with CMC. If not, see <http://www.gnu.org/licenses/>.
+  ************************************************************************** }
+
+{ **************************************************************************
+  Additional Copyright (C) for this modul:
+
+  Chromaprint: Audio fingerprinting toolkit
+  Copyright (C) 2010-2012  Lukas Lalinsky <lalinsky@gmail.com>
+
+
+  Lomont FFT: Fast Fourier Transformation
+  Original code by Chris Lomont, 2010-2012, http://www.lomont.org/Software/
+
+
+  ************************************************************************** }
+{$ENDREGION}
+{$REGION 'Notes'}
+{ **************************************************************************
+
+  See CP.Chromaprint.pas for more information
+
+  ************************************************************************** }
+unit CP.IntegralImage;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Image;
+
+{ *
+  * Image transformation that allows us to quickly calculate the sum of
+  * values in a rectangular area.
+  *
+  * http://en.wikipedia.org/wiki/Summed_area_table
+  * }
+type
+
+    { TIntegralImage }
+
+    TIntegralImage = class(TObject)
+    private
+        FImage: TImage;
+        procedure Transform;
+    public
+        { Construct the integral image. Note that will modify the original image in-place, so it will not be usable afterwards. }
+        constructor Create(Image: TImage);
+        destructor Destroy; override;
+        function Area(x1, y1, x2, y2: integer): double;
+        function NumColumns: integer;
+        function NumRows: integer;
+        function GetData(Row, Column: integer): double;
+    end;
+
+implementation
+
+{ TIntegralImage }
+
+procedure TIntegralImage.Transform;
+var
+    lColumns, lRows: integer;
+    m, n: integer;
+begin
+    // c++ is a pain;
+    // in Pascal you know what you're doing
+    lColumns := FImage.NumColumns;
+    lRows := FImage.NumRows;
+    for m := 1 to lColumns - 1 do
+    begin
+        // First column - add value on top
+        FImage.SetData(0, m, FImage.GetData(0, m) + FImage.GetData(0, m - 1));
+    end;
+    for n := 1 to lRows - 1 do
+    begin
+        // First row - add value on left
+        FImage.SetData(n, 0, FImage.GetData(n, 0) + FImage.GetData(n - 1, 0));
+        for m := 1 to lColumns - 1 do
+        begin
+            FImage.SetData(n, m, FImage.GetData(n, m) + FImage.GetData(n - 1, m) + FImage.GetData(n, m - 1) - FImage.GetData(n - 1, m - 1));
+        end;
+    end;
+end;
+
+constructor TIntegralImage.Create(Image: TImage);
+begin
+    FImage := Image;
+    Transform;
+end;
+
+destructor TIntegralImage.Destroy;
+begin
+    FImage := nil;
+    inherited;
+end;
+
+function TIntegralImage.GetData(Row, Column: integer): double;
+begin
+    result := FImage.GetData(Row, Column);
+end;
+
+function TIntegralImage.Area(x1, y1, x2, y2: integer): double;
+var
+    lArea: double;
+begin
+    if (x2 < x1) or (y2 < y1) then
+    begin
+        result := 0.0;
+        Exit;
+    end;
+    lArea := FImage.GetData(x2, y2);
+    if (x1 > 0) then
+    begin
+        lArea := lArea - FImage.GetData(x1 - 1, y2);
+        if (y1 > 0) then
+        begin
+            lArea := lArea + FImage.GetData(x1 - 1, y1 - 1);
+        end;
+    end;
+    if (y1 > 0) then
+    begin
+        lArea := lArea - FImage.GetData(x2, y1 - 1);
+    end;
+    result := lArea;
+end;
+
+function TIntegralImage.NumColumns: integer;
+begin
+    result := FImage.NumColumns;
+end;
+
+function TIntegralImage.NumRows: integer;
+begin
+    result := FImage.NumRows;
+end;
+
+end.

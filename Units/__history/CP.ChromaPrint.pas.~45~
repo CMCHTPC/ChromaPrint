@@ -1,0 +1,425 @@
+{$REGION 'Copyright (C) CMC Development Team'}
+{ **************************************************************************
+  Copyright (C) 2015 CMC Development Team
+
+  CMC is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  CMC is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with CMC. If not, see <http://www.gnu.org/licenses/>.
+  ************************************************************************** }
+
+{ **************************************************************************
+  Additional Copyright (C) for this modul:
+
+  Chromaprint: Audio fingerprinting toolkit
+  Copyright (C) 2010  Lukas Lalinsky <lalinsky@gmail.com>
+
+  Lomont FFT: Fast Fourier Transformation
+  Original code by Chris Lomont, 2010-2012, http://www.lomont.org/Software/
+
+
+  ************************************************************************** }
+{$ENDREGION}
+{$REGION 'Notes'}
+{ **************************************************************************
+  Version 0.1 2015.07.13 - First release
+
+  This is ChromaPrint for Pascal.
+  Look for more details at https://acoustid.org/chromaprint
+
+
+  For FPC, use the included DaMath Librarie for DOUBLE Precision calculation.
+  FPC has some bugs with mathematic operations like double division by integer.
+
+  Delphi is working with the standard Math-Lib.
+
+  Use the ffMPEG libaries if you want to use the avlibcodec.dll.
+
+  You can use the build in Lomont FFT and the build in Audio resampler (which is
+  itself translated form the ffmpeg-source / chromaprint-source ) to have no
+  dependencies.
+
+  Compiler-switch in CP.FFT: USE_FFT_LOMONT
+  This switch is turned on in FPC right now, cause ffmpeg headers are not checked
+  if working with FPC.
+
+
+  ************************************************************************** }
+{$ENDREGION}
+unit CP.ChromaPrint;
+
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    {$IFDEF FPC}
+    XMLRead, XMLWrite, DOM,
+    {$ENDIF}
+    CP.FingerprinterConfiguration, CP.Resampler,
+    CP.IntegralImage, CP.FFT,
+    CP.Classifier, CP.FeatureVectorConsumer, CP.SilenceRemover, CP.AudioConsumer,
+    CP.AudioProcessor, CP.Chroma, CP.Fingerprint,
+    CP.Image, CP.Def;
+
+type
+    TChromaprintContext = record
+        Algorithm: integer;
+        Fingerprinter: TFingerprinter;
+        Fingerprint: TUINT32Array;
+    end;
+
+    TAcoustIDResult = record
+        Score: single;
+        ID: ansistring;
+        MusicBrainzRecordingID: array of ansistring;
+    end;
+
+    TAcoustIDResponse = record
+        Status: integer;
+        Results: array of TAcoustIDResult;
+    end;
+
+    { TChromaPrint }
+
+    IChromaPrint = interface
+        ['{9C602390-DEBC-431B-BFFB-DE0372AD6102}']
+        function Version: PWideChar; stdcall;
+        function New(Algorithm: integer): HResult; stdcall;
+        function GetAlgorithm: integer; stdcall;
+        function SetOption(const Name: PWideChar; Value: integer): HResult; stdcall;
+        function Start(Sample_Rate: integer; NumChannels: integer): HResult; stdcall;
+        function Feed(Data: TSmallintArray; length: integer): HResult; stdcall;
+        function Finish: HResult; stdcall;
+        function GetFingerprint(out Fingerprint: ansistring): HResult; stdcall;
+        function GetRawFingerprint(out Fingerprint: TUINT32Array; out Size: integer): HResult; stdcall;
+        function EnocdeFingerprint(RawFP: TUINT32Array; Algorithm: integer; Out EncodedFP: ansistring; out EncodedSize: integer;
+            Base64: boolean): HResult;
+            stdcall;
+        function DecodeFingerprint(encoded: string; uncompressed: TUINT32Array; out Algorithm: integer; Base64: boolean): HResult; stdcall;
+    end;
+
+    IAcoustID = interface
+        function SearchAcoustID(Fingerprint: ansistring; Duration: integer): HResult; stdcall;
+        function GetSearchCount: integer; stdcall;
+        function GetMusicBrainzInfo(SearchNr: integer; var AcoustIDInfo: TAcoustIDResult): HResult; stdcall;
+        function SetAPIKey(Key: ansistring): HResult; stdcall;
+    end;
+
+    TChromaPrint = class(TInterfacedObject, IChromaPrint, IAcoustID)
+    private
+        // IChromaPrint
+        ctx: TChromaprintContext;
+        // IAcoustID
+        FSearchCount: integer;
+        FResponse: TAcoustIDResponse;
+        FAcoustIDAPIKey: ansistring;
+        {$IFDEF FPC}
+        function ReadXMLAcoustIDSearchResult(AXMLDocument: TXMLDocument): HResult;
+        {$ENDIF]
+    public
+        // IChromaPrint
+        function Version: PWideChar; stdcall;
+        function New(Algorithm: integer): HResult; stdcall;
+        function GetAlgorithm: integer; stdcall;
+        function SetOption(const Name: PWideChar; Value: integer): HResult; stdcall;
+        function Start(Sample_Rate: integer; NumChannels: integer): integer; stdcall;
+        function Feed(Data: TSmallintArray; length: integer): HResult; stdcall;
+        function Finish: HResult; stdcall;
+        function GetFingerprint(out Fingerprint: ansistring): HResult; stdcall;
+        function GetRawFingerprint(out Fingerprint: TUINT32Array; out Size: integer): HResult; stdcall;
+        function EnocdeFingerprint(RawFP: TUINT32Array; Algorithm: integer; Out EncodedFP: ansistring; out EncodedSize: integer;
+            Base64: boolean): HResult;
+            stdcall;
+        function DecodeFingerprint(encoded: string; uncompressed: TUINT32Array; out Algorithm: integer; Base64: boolean): HResult; stdcall;
+        // IAcoustID
+        function SearchAcoustID(Fingerprint: ansistring; Duration: integer): HResult; stdcall;
+        function GetSearchCount: integer; stdcall;
+        function GetMusicBrainzInfo(SearchNr: integer; var AcoustIDInfo: TAcoustIDResult): HResult; stdcall;
+        function SetAPIKey(Key: ansistring): HResult; stdcall;
+    public
+        constructor Create;
+        destructor Destroy; override;
+    end;
+
+implementation
+
+uses
+    Windows, httpsend, CP.Utils, CP.Base64, CP.FingerprintCompressor
+{$IFDEF FPC}
+    , DaMath
+{$ELSE}
+    , Math
+{$ENDIF};
+
+{ TChromaPrint }
+
+function TChromaPrint.ReadXMLAcoustIDSearchResult(AXMLDocument: TXMLDocument): HResult;
+var
+    i, m, j, k, lRecordingIndex: integer;
+
+    ts: ansistring;
+    lChildNode, lChildNode2, lRecordingNode: TDOMNode;
+    lRecordingCount: integer;
+    lScore: ansistring;
+    lValue: single;
+    lFormatSettings: TFormatSettings;
+begin
+    lFormatSettings.DecimalSeparator := '.';
+    SetLength(FResponse.Results, 0);
+    FResponse.Status := 0; // = Status Error
+
+    m := AXMLDocument.DocumentElement.ChildNodes.Count;
+    with AXMLDocument.DocumentElement.ChildNodes do
+    begin
+        for i := 0 to (m - 1) do
+        begin
+            ts := Item[i].NodeName;
+            if ts = 'status' then
+            begin
+
+            end
+            else if ts = 'results' then
+            begin
+                SetLength(FResponse.Results, Item[i].ChildNodes.Count);
+
+                for j := 0 to Item[i].ChildNodes.Count - 1 do
+                begin
+                    lChildNode := Item[i].ChildNodes.Item[j];
+                    ts := lChildNode.NodeName;
+                    if ts = 'result' then
+                    begin
+                        // we are now looking for results
+                        for k := 0 to lChildNode.ChildNodes.Count - 1 do
+                        begin
+                            lChildNode2 := lChildNode.ChildNodes.Item[k];
+                            ts := lChildNode2.NodeName;
+                            if ts = 'recordings' then
+                            begin
+                                lRecordingCount := lChildNode2.ChildNodes.Count;
+                                SetLength(FResponse.Results[j].MusicBrainzRecordingID, lRecordingCount);
+                                for lRecordingIndex := 0 to lRecordingCount - 1 do
+                                begin
+                                    lRecordingNode := lChildNode2.ChildNodes.Item[lRecordingIndex];
+                                    ts := lRecordingNode.NodeName;
+                                    if ts = 'recording' then
+                                        FResponse.Results[j].MusicBrainzRecordingID[lRecordingIndex] :=
+                                            lRecordingNode.FirstChild.FirstChild.NodeValue;
+                                end;
+                            end
+                            else if ts = 'score' then
+                            begin
+                                lScore := ansistring(lChildNode2.FirstChild.NodeValue);
+                                lValue := 0;
+                                if lScore <> '' then
+                                    lValue := StrToFloat(lScore, lFormatSettings);
+                                FResponse.Results[j].Score := lValue;
+
+                            end
+                            else if ts = 'id' then
+                            begin
+                                FResponse.Results[j].ID := lChildNode2.FirstChild.NodeValue;
+                            end;
+                        end;
+                    end;
+                    OutputDebugString(PChar(ts));
+                end;
+            end;
+        end;
+    end;
+end;
+
+
+
+function TChromaPrint.Version: PWideChar; stdcall;
+begin
+    Result := PWideChar(IntToStr(CHROMAPRINT_VERSION_MAJOR) + '.' + IntToStr(CHROMAPRINT_VERSION_MINOR) + '.' + IntToStr(CHROMAPRINT_VERSION_PATCH));
+end;
+
+
+
+function TChromaPrint.New(Algorithm: integer): HResult; stdcall;
+begin
+    SetLength(ctx.Fingerprint, 0);
+    ctx.Algorithm := Algorithm;
+    if ctx.Fingerprinter <> nil then
+        ctx.Fingerprinter.Free;
+    ctx.Fingerprinter := TFingerprinter.Create(CreateFingerprinterConfiguration(ctx.Algorithm));
+    if ctx.Fingerprinter <> nil then
+        Result := S_OK
+    else
+        Result := S_FALSE;
+end;
+
+
+
+function TChromaPrint.GetAlgorithm: integer; stdcall;
+begin
+    Result := ctx.Algorithm;
+end;
+
+
+
+function TChromaPrint.SetOption(const Name: PWideChar; Value: integer): HResult; stdcall;
+begin
+    if ctx.Fingerprinter.SetOption(Name, Value) then
+        Result := S_OK
+    else
+        Result := S_FALSE;
+end;
+
+
+
+function TChromaPrint.Start(Sample_Rate: integer; NumChannels: integer): integer; stdcall;
+begin
+    if ctx.Fingerprinter.Start(Sample_Rate, NumChannels) then
+        Result := S_OK
+    else
+        Result := S_FALSE;
+end;
+
+
+
+function TChromaPrint.Feed(Data: TSmallintArray; length: integer): HResult; stdcall;
+begin
+    // data: raw audio data, should point to an array of 16-bit signed integers in native byte-order
+    ctx.Fingerprinter.Consume(Data, 0, length);
+    Result := S_OK;
+end;
+
+
+
+function TChromaPrint.Finish: HResult; stdcall;
+begin
+    ctx.Fingerprint := ctx.Fingerprinter.Finish;
+    Result := S_OK;
+end;
+
+
+
+function TChromaPrint.GetFingerprint(out Fingerprint: ansistring): HResult; stdcall;
+begin
+    Fingerprint := Base64Encode(CompressFingerprint(ctx.Fingerprint, Ord(ctx.Algorithm)));
+    Result := S_OK;
+end;
+
+
+
+function TChromaPrint.GetRawFingerprint(out Fingerprint: TUINT32Array; out Size: integer): HResult; stdcall;
+begin
+    Fingerprint := ctx.Fingerprint;
+    Size := length(ctx.Fingerprint);
+    Result := S_OK;
+end;
+
+
+
+function TChromaPrint.EnocdeFingerprint(RawFP: TUINT32Array; Algorithm: integer; out EncodedFP: ansistring;
+    out EncodedSize: integer; Base64: boolean): HResult; stdcall;
+var
+    compressed: string;
+begin
+    compressed := CompressFingerprint(RawFP, Algorithm);
+    if not Base64 then
+    begin
+        EncodedFP := compressed;
+        EncodedSize := length(EncodedFP);
+        Result := S_OK;
+    end
+    else
+    begin
+        EncodedFP := Base64Encode(compressed);
+        EncodedSize := length(EncodedFP);
+        Result := S_OK;
+    end;
+end;
+
+
+
+constructor TChromaPrint.Create;
+begin
+
+end;
+
+
+
+function TChromaPrint.DecodeFingerprint(encoded: string; uncompressed: TUINT32Array; out Algorithm: integer; Base64: boolean): HResult; stdcall;
+
+var
+    lCompressed: string;
+begin
+    if Base64 then
+        lCompressed := Base64Decode(encoded)
+    else
+        lCompressed := encoded;
+    uncompressed := DecompressFingerprint(lCompressed, Algorithm);
+end;
+
+
+
+function TChromaPrint.SearchAcoustID(Fingerprint: ansistring; Duration: integer): HResult; stdcall;
+var
+    HTTP: THTTPSend;
+    FURLXML: ansistring;
+    XMLDocument: TXMLDocument;
+begin
+    FURLXML := 'http://api.acoustid.org/v2/lookup?client=' + FAcoustIDAPIKey + '&format=xml&duration=' +
+        IntToStr(Duration) + '&meta=recordingids&fingerprint=' + Fingerprint;
+    HTTP := THTTPSend.Create;
+    try
+        if HTTP.HTTPMethod('GET', FURLXML) then
+        begin
+            ReadXMLFile(XMLDocument, HTTP.Document);
+            ReadXMLAcoustIDSearchResult(XMLDocument);
+        end;
+    finally
+        HTTP.Free;
+    end;
+end;
+
+
+
+function TChromaPrint.GetSearchCount: integer; stdcall;
+begin
+    Result := length(FResponse.Results);
+end;
+
+
+
+function TChromaPrint.GetMusicBrainzInfo(SearchNr: integer; var AcoustIDInfo: TAcoustIDResult): HResult; stdcall;
+begin
+    AcoustIDInfo.Score := FResponse.Results[SearchNr].Score;
+    AcoustIDInfo.ID := FResponse.Results[SearchNr].ID;
+    Move(FResponse.Results[SearchNr].MusicBrainzRecordingID, AcoustIDInfo.MusicBrainzRecordingID,
+        SizeOf(FResponse.Results[SearchNr].MusicBrainzRecordingID));
+end;
+
+
+
+function TChromaPrint.SetAPIKey(Key: ansistring): HResult; stdcall;
+begin
+    FAcoustIDAPIKey := Key;
+end;
+
+
+
+destructor TChromaPrint.Destroy;
+begin
+    SetLength(ctx.Fingerprint, 0);
+    if ctx.Fingerprinter <> nil then
+        ctx.Fingerprinter.Free;
+    inherited Destroy;
+end;
+
+end.

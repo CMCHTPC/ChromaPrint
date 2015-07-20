@@ -1,0 +1,193 @@
+unit CP.FFT;
+{$IFDEF FPC}
+{$MODE delphi}
+{$DEFINE USE_FFT_LOMONT} // ffmpeg not ready in FPC now :(
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def, CP.AudioConsumer;
+
+type
+
+    { TFFTFrame }
+
+    TFFTFrame = class(TObject)
+    private
+        FSize: integer;
+    public
+        property Size: integer read FSize;
+    public
+        FData: TDoubleArray;
+        constructor Create(Size: integer);
+        destructor Destroy; override;
+
+        function Magnitude(i: integer): double;
+        function Energy(i: integer): double;
+    end;
+
+    TFFTFrameConsumer = class(TObject)
+    public
+        procedure Consume(frame: TFFTFrame); virtual; abstract;
+    end;
+
+    TFFTLib = class(TObject)
+    protected
+        FWindow: TDoubleArray;
+        FFrameSize: integer;
+        FFrameSizeH: integer;
+    public
+        constructor Create(frame_size: integer; window: TDoubleArray);
+        destructor Destroy; override;
+        procedure ComputeFrame(input: TSmallintArray; var frame: TFFTFrame); virtual; abstract;
+    end;
+
+    { TFFT }
+
+    TFFT = class(TAudioConsumer)
+    private
+        FBufferOffset: integer;
+        FWindow: TDoubleArray;
+        FFFTBuffer: TSmallintArray;
+        FFrame: TFFTFrame;
+        FFrameSize: integer;
+        FIncrement: integer;
+        FLib: TFFTLib;
+        FConsumer: TFFTFrameConsumer;
+    public
+        property FrameSize: integer read FFrameSize;
+    public
+        constructor Create(frame_size: integer; overlap: integer; consumer: TFFTFrameConsumer);
+        destructor Destroy; override;
+        procedure Reset;
+        procedure Consume(input: TSmallintArray; AOffset: integer; lLength: integer); override;
+        function overlap: integer;
+    end;
+
+implementation
+
+uses
+    Windows, CP.Utils, CP.CombinedBuffer,
+{$IFNDEF FPC}
+    CP.AVFFT,
+{$ENDIF}
+    CP.LomontFFT;
+
+{ TFFTFrame }
+
+constructor TFFTFrame.Create(Size: integer);
+begin
+    FSize := Size;
+    SetLength(FData, FSize);
+end;
+
+destructor TFFTFrame.Destroy;
+begin
+    SetLength(FData, 0);
+    inherited Destroy;
+end;
+
+function TFFTFrame.Magnitude(i: integer): double;
+begin
+    Result := sqrt(FData[i]);
+end;
+
+function TFFTFrame.Energy(i: integer): double;
+begin
+    Result := FData[i];
+end;
+
+{ TFFT }
+
+constructor TFFT.Create(frame_size: integer; overlap: integer; consumer: TFFTFrameConsumer);
+var
+    i: integer;
+    j: integer;
+begin
+    SetLength(FWindow, frame_size);
+    FBufferOffset := 0;
+    SetLength(FFFTBuffer, frame_size);
+
+    FFrame := TFFTFrame.Create(frame_size);
+    FFrameSize := frame_size;
+    FIncrement := frame_size - overlap;
+    FConsumer := consumer;
+
+    PrepareHammingWindow(FWindow);
+    for i := 0 to frame_size - 1 do
+    begin
+        FWindow[i] := FWindow[i] / $7FFF;
+    end;
+{$IFDEF USE_FFT_LOMONT}
+    FLib := TFFTLomont.Create(frame_size, FWindow);
+{$ELSE}
+    FLib := TFFTAV.Create(frame_size, FWindow);
+{$ENDIF}
+end;
+
+destructor TFFT.Destroy;
+begin
+    FFrame.Free;
+    FLib.Free;
+    SetLength(FFFTBuffer, 0);
+    SetLength(FWindow, 0);
+    inherited;
+end;
+
+function TFFT.overlap: integer;
+begin
+    Result := FFrameSize - FIncrement;
+end;
+
+procedure TFFT.Reset;
+begin
+    FBufferOffset := 0;
+end;
+
+procedure TFFT.Consume(input: TSmallintArray; AOffset: integer; lLength: integer);
+var
+    lCombinedBuffer: TCombinedBuffer;
+    lBuffer: TSmallintArray;
+begin
+    // Special case, just pre-filling the buffer
+    if (FBufferOffset + lLength < FFrameSize) then
+    begin
+        Move(input[0], FFFTBuffer[FBufferOffset], lLength * SizeOf(smallint));
+        FBufferOffset := FBufferOffset + lLength;
+        Exit;
+    end;
+    // Apply FFT on the available data
+    lCombinedBuffer := TCombinedBuffer.Create(FFFTBuffer, FBufferOffset, input, lLength);
+
+    while (lCombinedBuffer.Size >= FFrameSize) do
+    begin
+        SetLength(lBuffer, FFrameSize);
+        lCombinedBuffer.Read(lBuffer, 0, FFrameSize);
+
+        FLib.ComputeFrame(lBuffer, FFrame);
+        FConsumer.Consume(FFrame);
+        lCombinedBuffer.Shift(FIncrement);
+        SetLength(lBuffer, 0);
+    end;
+    // Copy the remaining input data to the internal buffer
+    lCombinedBuffer.Flush(FFFTBuffer);
+    FBufferOffset := lCombinedBuffer.Size();
+    lCombinedBuffer.Free;
+end;
+
+{ TFFTLib }
+
+constructor TFFTLib.Create;
+begin
+
+end;
+
+destructor TFFTLib.Destroy;
+begin
+
+    inherited;
+end;
+
+end.

@@ -1,0 +1,67 @@
+unit CP.Classifier;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    IntegralImage,
+    CP.Filter, CP.Quantizer;
+
+type
+
+    { Classifier }
+
+    { TClassifier }
+
+    TClassifier = class(TObject)
+    private
+        m_filter: TFilter;
+        m_quantizer: TQuantizer;
+    public
+        property Filter: TFilter read m_filter;
+        property Quantizer: TQuantizer read m_quantizer;
+
+    public
+        constructor Create(Filter: TFilter = nil; Quantizer: TQuantizer = nil);
+        destructor Destroy; override;
+
+        function Classify(image: TIntegralImage; offset: integer): integer;
+    end;
+
+    TClassifierArray = array of TClassifier;
+
+implementation
+
+{ Classifier }
+
+constructor TClassifier.Create(Filter: TFilter; Quantizer: TQuantizer);
+begin
+    if Filter <> nil then
+        m_filter := Filter
+    else
+        m_filter := TFilter.Create;
+    if Quantizer <> nil then
+        m_quantizer := Quantizer
+    else
+        m_quantizer := TQuantizer.Create;
+end;
+
+destructor TClassifier.Destroy;
+begin
+    m_filter.Free;
+    m_quantizer.Free;
+    inherited;
+end;
+
+function TClassifier.Classify(image: TIntegralImage; offset: integer): integer;
+var
+    Value: double;
+begin
+    Value := m_filter.Apply(image, offset);
+    Result := m_quantizer.Quantize(Value);
+end;
+
+end.

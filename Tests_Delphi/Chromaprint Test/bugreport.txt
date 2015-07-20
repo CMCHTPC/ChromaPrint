@@ -1,0 +1,1352 @@
+date/time         : 2015-07-09, 15:11:47, 527ms
+computer name     : NATSC0089
+user name         : ladmin <admin>
+registered owner  : zz_sccmnaa / SATSC0049
+operating system  : Windows 7 Service Pack 1 build 7601
+system language   : German
+system up time    : 4 days 16 hours
+program up time   : 13 seconds
+processors        : 4x Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+physical memory   : 1182/3036 MB (free/total)
+free disk space   : (C:) 200,14 GB (F:) 6,16 GB
+display mode      : 1920x1080, 32 bit
+process id        : $7ec
+allocated memory  : 58,83 MB
+executable        : ChromaTest.exe
+exec. date/time   : 2015-07-09 15:11
+compiled with     : Delphi 2010
+madExcept version : 3.0o
+callstack crc     : $e957c0ae, $0b5ed4e4, $0b5ed4e4
+exception number  : 1
+exception class   : EOutOfMemory
+exception message : Zu wenig Arbeitsspeicher.
+
+main thread ($1e8c):
+004081f3 +013 ChromaTest.exe System      47   +0 @NewUnicodeString
+00407913 +00b ChromaTest.exe System      47   +0 @UStrFromPWCharLen
+0040ab28 +050 ChromaTest.exe System      47   +0 LoadResString
+0047ac92 +04a ChromaTest.exe SysUtils            CreateAVObject
+0047ae6e +05a ChromaTest.exe SysUtils            GetExceptionObject
+0046a798 +038 ChromaTest.exe madExcept           MyExceptObjProc
+00405d0b +033 ChromaTest.exe System      47   +0 @HandleAnyException
+773171c6 +081 ntdll.dll                          RtlRaiseStatus
+77317052 +00a ntdll.dll                          KiUserExceptionDispatcher
+00408f82 +12a ChromaTest.exe System      47   +0 DynArraySetLength
+00408ff5 +005 ChromaTest.exe System      47   +0 @DynArraySetLength
+0051af93 +4eb ChromaTest.exe MainUnit   981 +105 TForm1.btnTestChromaFilterClick
+004dbe8b +06f ChromaTest.exe Controls            TControl.Click
+004bd85a +01e ChromaTest.exe StdCtrls            TCustomButton.Click
+004be2c0 +010 ChromaTest.exe StdCtrls            TCustomButton.CNCommand
+004db920 +2d4 ChromaTest.exe Controls            TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls            TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls            TButtonControl.WndProc
+004db544 +024 ChromaTest.exe Controls            TControl.Perform
+004e033b +023 ChromaTest.exe Controls            DoControlMsg
+004e0da3 +00b ChromaTest.exe Controls            TWinControl.WMCommand
+00503900 +02c ChromaTest.exe Forms               TCustomForm.WMCommand
+004db920 +2d4 ChromaTest.exe Controls            TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls            TWinControl.WndProc
+00500808 +594 ChromaTest.exe Forms               TCustomForm.WndProc
+004df888 +02c ChromaTest.exe Controls            TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes             StdWndProc
+75a2557d +044 USER32.dll                         SendMessageW
+75a21b52 +016 USER32.dll                         CallWindowProcW
+004e02e8 +0d8 ChromaTest.exe Controls            TWinControl.DefaultHandler
+004dc2dc +010 ChromaTest.exe Controls            TControl.WMLButtonUp
+004db920 +2d4 ChromaTest.exe Controls            TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls            TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls            TButtonControl.WndProc
+004df888 +02c ChromaTest.exe Controls            TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes             StdWndProc
+75a2cc6b +00a USER32.dll                         DispatchMessageW
+0050986d +11d ChromaTest.exe Forms               TApplication.ProcessMessage
+005098b2 +00a ChromaTest.exe Forms               TApplication.HandleMessage
+00509bdd +0c9 ChromaTest.exe Forms               TApplication.Run
+00526ed1 +049 ChromaTest.exe ChromaTest  50   +4 initialization
+7596ee1a +010 kernel32.dll                       BaseThreadInitThunk
+
+thread $410:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+thread $1468:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+modules:
+00400000 ChromaTest.exe                              F:\GitHub\ChromaPrint\Tests_Delphi
+00580000 FastMM_FullDebugMode.dll 1.60.0.5           F:\GitHub\ChromaPrint\Tests_Delphi
+57770000 btmmhook.dll             6.5.1.2300         C:\Program Files\WIDCOMM\Bluetooth Software
+6a740000 dbghelp.dll              6.1.7601.17514     C:\Windows\system32
+70c10000 SHFolder.dll             6.1.7600.16385     C:\Windows\system32
+717a0000 wsock32.dll              6.1.7600.16385     C:\Windows\system32
+733d0000 winspool.drv             6.1.7601.17514     C:\Windows\system32
+73770000 propsys.dll              7.0.7601.17514     C:\Windows\system32
+739f0000 ntmarta.dll              6.1.7600.16385     C:\Windows\system32
+74060000 version.dll              6.1.7600.16385     C:\Windows\system32
+74170000 dwmapi.dll               6.1.7600.16385     C:\Windows\system32
+74190000 uxtheme.dll              6.1.7600.16385     C:\Windows\system32
+74790000 comctl32.dll             6.10.7601.17514    C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2
+74cf0000 msimg32.dll              6.1.7600.16385     C:\Windows\system32
+75340000 SspiCli.dll              6.1.7601.18443     C:\Windows\system32
+753b0000 CRYPTBASE.dll            6.1.7600.16385     C:\Windows\system32
+754e0000 DEVOBJ.dll               6.1.7600.16385     C:\Windows\system32
+756e0000 KERNELBASE.dll           6.1.7601.18409     C:\Windows\system32
+75730000 CFGMGR32.dll             6.1.7601.17514     C:\Windows\system32
+75760000 advapi32.dll             6.1.7601.17514     C:\Windows\system32
+75920000 kernel32.dll             6.1.7601.18409     C:\Windows\system32
+75a00000 LPK.dll                  6.1.7601.18177     C:\Windows\system32
+75a10000 USER32.dll               6.1.7601.17514     C:\Windows\system32
+75ae0000 PSAPI.DLL                6.1.7600.16385     C:\Windows\system32
+75c10000 NSI.dll                  6.1.7600.16385     C:\Windows\system32
+75c20000 oleaut32.dll             6.1.7601.18640     C:\Windows\system32
+75cb0000 comdlg32.dll             6.1.7601.17514     C:\Windows\system32
+75d30000 IMM32.DLL                6.1.7601.17514     C:\Windows\system32
+75d50000 sechost.dll              6.1.7600.16385     C:\Windows\SYSTEM32
+75d70000 WS2_32.dll               6.1.7601.17514     C:\Windows\system32
+75e10000 msvcrt.dll               7.0.7601.17744     C:\Windows\system32
+76080000 RPCRT4.dll               6.1.7601.18532     C:\Windows\system32
+76130000 MSCTF.dll                6.1.7600.16385     C:\Windows\system32
+76200000 imagehlp.dll             6.1.7601.18288     C:\Windows\system32
+76230000 ole32.dll                6.1.7601.17514     C:\Windows\system32
+76390000 WLDAP32.dll              6.1.7601.17514     C:\Windows\system32
+763f0000 SHELL32.dll              6.1.7601.18517     C:\Windows\system32
+77040000 CLBCatQ.DLL              2001.12.8530.16385 C:\Windows\system32
+770d0000 SETUPAPI.dll             6.1.7601.17514     C:\Windows\system32
+77270000 SHLWAPI.dll              6.1.7601.17514     C:\Windows\system32
+772d0000 ntdll.dll                6.1.7601.18205     C:\Windows\SYSTEM32
+77410000 USP10.dll                1.626.7601.18454   C:\Windows\system32
+774b0000 GDI32.dll                6.1.7601.18577     C:\Windows\system32
+
+processes:
+0000 Idle                            0 0    0
+0004 System                          0 0    0
+01a8 smss.exe                        0 0    0   normal       C:\Windows\system32
+026c csrss.exe                       0 0    0   normal       C:\Windows\system32
+02bc wininit.exe                     0 0    0   high         C:\Windows\system32
+02c4 csrss.exe                       1 176  81  normal       C:\Windows\system32
+02fc winlogon.exe                    1 6    0   high         C:\Windows\system32
+0328 services.exe                    0 0    0   normal       C:\Windows\system32
+0330 lsass.exe                       0 0    0   normal       C:\Windows\system32
+0338 lsm.exe                         0 0    0   normal       C:\Windows\system32
+03a0 svchost.exe                     0 0    0   normal       C:\Windows\system32
+03e4 TcNcI.exe                       0 0    0   high         C:\TwinCAT\CNC
+0408 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0460 MsMpEng.exe                     0 0    0   normal       c:\Program Files\Microsoft Security Client
+04d8 atiesrxx.exe                    0 0    0   normal       C:\Windows\system32
+04f8 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0528 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0540 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0568 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0588 STacSV.exe                      0 0    0   normal       C:\Program Files\IDT\WDM
+06ac Hpservice.exe                   0 0    0   normal       C:\Windows\system32
+06d4 atieclxx.exe                    1 9    10  normal       C:\Windows\system32
+079c SbieSvc.exe                     0 0    0   normal       C:\Program Files\Sandboxie
+01b8 vcsFPService.exe                0 0    0   normal       C:\Windows\system32
+0454 svchost.exe                     0 0    0   normal       C:\Windows\system32
+07b0 spoolsv.exe                     0 0    0   normal       C:\Windows\System32
+0814 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0884 almsrvx.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\sws\almsrv
+089c AppleMobileDeviceService.exe    0 0    0   normal       C:\Program Files\Common Files\Apple\Mobile Device Support
+08f4 BSQLServer.exe                  0 0    0   normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+09bc mDNSResponder.exe               0 0    0   normal       C:\Program Files\Bonjour
+09d0 btwdins.exe                     0 0    0   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0a24 cvpnd.exe                       0 0    0   normal       C:\Program Files\Cisco Systems\VPN Client
+0abc taskhost.exe                    1 31   22  normal       C:\Windows\system32
+0ad8 DWRCS.EXE                       0 0    0   normal       C:\Windows\dwrcs
+0b14 taskeng.exe                     1 12   3   normal       C:\Windows\system32
+0b50 Dwm.exe                         1 23   3   high         C:\Windows\system32
+0b94 ipoint.exe                      1 27   50  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0b9c Explorer.EXE                    1 905  572 normal       C:\Windows
+0bd4 itype.exe                       1 23   39  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0c40 EngineerVistaSupportService.exe 0 0    0   normal       C:\Windows\system32
+0d18 fbguard.exe                     0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+0d70 DWRCST.exe                      1 21   11  normal       C:\Windows\dwrcs
+0e0c QLBController.exe               1 18   16  normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0e1c sttray.exe                      1 18   17  normal       C:\Program Files\IDT\WDM
+0e50 hasplms.exe                     0 0    0   normal       C:\Windows\system32
+0e70 HPHotkeyMonitor.exe             0 0    0   normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0eec iusb3mon.exe                    1 21   8   normal       C:\Program Files\Intel\Intel(R) USB 3.0 eXtensible Host Controller Driver\Application
+0f20 SynTPEnh.exe                    1 94   43  above normal C:\Program Files\Synaptics\SynTP
+0f3c HeciServer.exe                  0 0    0   normal       C:\Program Files\Intel\iCLS Client
+0f64 jhi_service.exe                 0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\DAL
+0f84 Lenze.Server.PackageManager.exe 0 0    0   normal       C:\Program Files\Lenze\PackageManager
+0f94 TcSysUI.exe                     1 55   19  normal       C:\TwinCAT
+0f9c fpassist.exe                    1 32   19  normal       C:\Program Files\FreePDF_XP
+0fc0 CNMNSST.exe                     1 34   13  normal       C:\Program Files\Canon\IJ Network Scanner Selector EX
+0fc8 msseces.exe                     1 184  116 normal       C:\Program Files\Microsoft Security Client
+091c SYNTPHELPER.EXE                 1 9    3   above normal C:\PROGRAM FILES\SYNAPTICS\SYNTP
+0a18 TSVNCache.exe                   1 12   4   normal       C:\Program Files\TortoiseSVN\bin
+0c14 SbieCtrl.exe                    1 123  56  normal       C:\Program Files\Sandboxie
+0c84 MOM.exe                         1 10   9   normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+0dd4 MSOSYNC.EXE                     1 64   21  normal       C:\Program Files\Microsoft Office\Office14
+0de4 BTTray.exe                      1 95   17  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0be8 sqlservr.exe                    0 0    0   normal       c:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\Binn
+10b4 svchost.exe                     0 0    0   normal       C:\Windows\system32
+10c8 rndlresolversvc.exe             0 0    0   normal       C:\Program Files\RealNetworks\RealDownloader
+10f4 s7hspsvx.exe                    0 0    0   normal       C:\Program Files\Siemens\Step7\s7bin
+1114 s7oiehsx.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\S7IEPG
+1194 S7TraceServiceX.exe             0 0    0   normal       C:\Program Files\Common Files\Siemens\Automation\TraceEngine\bin
+11b4 CCC.exe                         1 64   45  normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+11ec sqlwriter.exe                   0 0    0   normal       C:\Program Files\Microsoft SQL Server\90\Shared
+1248 ss_conn_service.exe             0 0    0   normal       C:\Program Files\Samsung\USB Drivers\25_escape\conn
+1264 svchost.exe                     0 0    0   normal       C:\Windows\system32
+12e4 TeamViewer_Service.exe          0 0    0   normal       C:\Program Files\TeamViewer
+1318 TCATSysSrv.exe                  0 0    0   high         C:\TwinCAT
+1364 vmnat.exe                       0 0    0   normal       C:\Windows\system32
+1388 PNIOMGR.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+1394 conhost.exe                     0 0    0   normal       C:\Windows\system32
+13d4 vmware-authd.exe                0 0    0   normal       C:\Program Files\VMware\VMware Player
+14d4 vmnetdhcp.exe                   0 0    0   normal       C:\Windows\system32
+14e8 vmware-usbarbitrator.exe        0 0    0   normal       C:\Program Files\Common Files\VMware\USB
+1754 BtStackServer.exe               1 46   10  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0498 IAStorIcon.exe                  1 37   14  normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+0d5c hpqWmiEx.exe                    0 0    0   normal       C:\Program Files\Hewlett-Packard\Shared
+1924 svchost.exe                     0 0    0   normal       C:\Windows\System32
+1938 unsecapp.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1954 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+195c wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19b0 NisSrv.exe                      0 0    0   normal       c:\Program Files\Microsoft Security Client
+1a64 SearchIndexer.exe               0 0    0   normal       C:\Windows\system32
+1afc fbserver.exe                    0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+1b74 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1c10 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1c80 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1d34 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1dd0 wmpnetwk.exe                    0 0    0   normal       C:\Program Files\Windows Media Player
+1e30 BTHSAmpPalService.exe           0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e48 BTHSSecurityMgr.exe             0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e34 CcmExec.exe                     0 0    0   normal       C:\Windows\CCM
+0fa4 CmRcService.exe                 0 0    0   normal       C:\Windows\CCM\RemCtrl
+19a8 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+04c8 IAStorDataMgrSvc.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+1054 IntelMeFWService.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\FWService
+1c0c LMS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\LMS
+19f8 PrivacyIconClient.exe           1 97   43  normal       C:\Program Files\Intel\Intel(R) Management Engine Components\IMSS
+04b0 UNS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\UNS
+1df4 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1f74 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19bc wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+0384 SCNotification.exe              1 15   10  normal       C:\Windows\CCM
+25d0 Skype.exe                       1 252  133 normal       C:\Program Files\Skype\Phone
+1cd4 Bluetooth Headset Helper.exe    1 35   5   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+1424 pniopcac.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+210c realsched.exe                   1 9    9   normal       C:\Program Files\Real\RealPlayer\update
+08d8 chrome.exe                      1 177  72  normal       C:\Program Files\Google\Chrome\Application
+0fe0 chrome.exe                      1 4    4   normal       C:\Program Files\Google\Chrome\Application
+2770 chrome.exe                      1 5    1   idle         C:\Program Files\Google\Chrome\Application
+2c10 chrome.exe                      1 5    1   normal       C:\Program Files\Google\Chrome\Application
+2834 notepad++.exe                   1 431  320 normal       C:\Program Files\Notepad++
+2acc bds.exe                         1 4581 620 normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+25c4 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2624 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2814 dexplore.exe                    1 175  172 normal       c:\Program Files\Common Files\Microsoft Shared\Help 9
+1f08 calc.exe                        1 190  165 normal       C:\Windows\system32
+0ebc audiodg.exe                     0 0    0
+1da4 NOTEPAD.EXE                     1 23   20  normal       C:\Windows\system32
+1f14 taskeng.exe                     0 0    0   below normal C:\Windows\system32
+07ec ChromaTest.exe                  1 75   67  normal       F:\GitHub\ChromaPrint\Tests_Delphi
+
+hardware:
++ Batteries
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft Composite Battery
+  - Microsoft-Netzteil
++ Biometric Devices
+  - Validity Sensor (driver 4.4.213.0)
++ Bluetooth Radios
+  - Broadcom 20702 Bluetooth 4.0 Adapter (driver 6.5.1.1785)
+  - Microsoft Bluetooth-Auflistung
++ Bluetooth Virtual Devices
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Imaging Responder (driver 6.5.1.1770)
+  - Bluetooth L2CAP Interface (driver 6.5.1.100)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth Remote Control (driver 6.5.1.1770)
+  - Bluetooth SyncML (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
++ Computer
+  - ACPI x86-basierter PC
++ Disk drives
+  - JMCR SD SCSI Disk Device
+  - ST1000LM014-1EJ164
++ Display adapters
+  - AMD Radeon HD 7700M Series (driver 14.301.1001.0)
+  - DameWare Development Mirror Driver (driver 1.1.0.0)
++ DVD/CD-ROM drives
+  - hp CDDVDW SN-208DB
++ Human Interface Devices
+  - Bluetooth Remote Control (driver 6.5.1.1240)
+  - HID-konformes Benutzersteuergerät
+  - HID-konformes Gerät
+  - HID-konformes Gerät
+  - Microsoft-Hardware – USB-Maus
+  - USB-Eingabegerät
+  - USB-Eingabegerät
++ IDE ATA/ATAPI controllers
+  - Intel(R) 7 Series Chipset Family SATA AHCI Controller (driver 11.1.0.1006)
++ IEEE 1394 Bus host controllers
+  - JMicron OHCI Compliant IEEE 1394 Host Controller (driver 1.0.23.1)
++ Imaging devices
+  - HP HD Webcam [Fixed] (driver 3.4.8.16)
++ Intel® Centrino® Wireless Bluetooth® + High Speed Geräte
+  - Intel® Centrino® Wireless Bluetooth® + High Speed - Virtueller Adapter (driver 15.1.0.4)
++ Keyboards
+  - DameWare Virtual Keyboard Emulation for Standard Keyboard (driver 1.0.0.1)
+  - HID-Tastatur
+  - Standard 101/102-Key or Microsoft Natural PS/2 Keyboard with HP QLB (driver 7.0.1.1)
++ Memory technology driver
+  - JMicron PCIe SD Host Controller (driver 1.0.68.0)
+  - JMicron PCIe SD/MMC Host Controller (driver 1.0.68.0)
++ Mice and other pointing devices
+  - Microsoft USB Wheel Mouse Optical (Mouse and Keyboard Center)
+  - Synaptics SMBus TouchPad (driver 16.3.9.0)
++ Modems
+  - Standardmäßige Modem-über-Bluetooth-Verbindung
++ Monitors
+  - PnP-Monitor (Standard)
+  - PnP-Monitor (Standard)
++ Network adapters
+  - Bluetooth Personal Area Network (driver 6.5.1.300)
+  - Cisco Systems VPN Adapter (driver 5.0.0.1)
+  - Intel(R) 82579LM Gigabit Network Connection (driver 11.12.36.0)
+  - Intel(R) Centrino(R) Advanced-N 6205 (driver 15.1.1.1)
+  - Microsoft-Adapter für Miniports virtueller WiFis
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.18.0)
+  - VMware Virtual Ethernet Adapter for VMnet1 (driver 4.2.1.0)
+  - VMware Virtual Ethernet Adapter for VMnet8 (driver 4.2.1.0)
++ Portable Devices
+  - F:\
++ Ports (COM & LPT)
+  - ECP Printer Port (LPT1)
+  - Intel(R) Active Management Technology - SOL (COM3) (driver 8.0.0.1262)
+  - Kommunikationsanschluss (COM1)
++ Processors
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
++ Security Devices
+  - Trusted Platform Module 1.2
++ Sensors
+  - HP Mobile Data Protection Sensor (driver 5.0.2.9)
++ SIMATIC NET
+  - SIMATIC MPI/PROFIBUS DPX2 Driver (driver 8.3.0.0)
+  - SIMATIC NET DP Driver (driver 8.1.0.4270)
+  - SIMATIC NET FDL Driver (driver 8.1.0.4270)
+  - SIMATIC NET Softnet Trace Driver (driver 8.0.0.4136)
+  - SIMATIC Transport (driver 8.3.0.0)
+  - SIMATIC TS Adapter RS232-32 (driver 8.3.0.0)
+  - SIMATIC USB (driver 8.3.0.0)
++ Sound, video and game controllers
+  - AMD High Definition Audio Device (driver 7.12.0.7719)
+  - Bluetooth-Audio (driver 6.5.1.1750)
+  - IDT High Definition Audio CODEC (driver 6.10.6398.0)
++ Storage controllers
+  - JMicron JMB36X Controller (driver 1.17.64.0)
++ Storage volume shadow copies
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
++ System devices
+  - 3rd Gen Core processor DRAM Controller - 0154 (driver 9.3.0.1011)
+  - ACPI-Deckel
+  - ACPI-Energiezustandknopf
+  - ACPI-Schalter
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - Busenumerator für Verbundgeräte
+  - DMA-Controller
+  - Eingebetteter, Microsoft ACPI-konformer Controller
+  - Enumerator-Treiber für Microsoft Virtual Drive
+  - Erweiterter E/A-Bus
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - High Definition Audio-Controller
+  - High Definition Audio-Controller
+  - Hochpräzisionsereigniszeitgeber
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 1 - 1E10 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 2 - 1E12 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 3 - 1E14 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 4 - 1E16 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 5 - 1E18 (driver 9.3.0.1020)
+  - Intel(R) 82802 Firmwarehub
+  - Intel(R) Management Engine Interface  (driver 8.0.0.1262)
+  - Intel(R) QM77 Express Chipset LPC Controller - 1E55 (driver 9.3.0.1020)
+  - IPBusEnum Root Enumerator
+  - Logische Schnittstelle für Druckeranschluss
+  - Microsoft ACPI-konformes System
+  - Microsoft Windows-Verwaltungsschnittstelle für ACPI
+  - Microsoft-Systemverwaltungs-BIOS-Treiber
+  - Numerischer Coprozessor
+  - PCI bus (driver 1.0.6.245)
+  - PnP-Softwaregeräte-Enumerator
+  - Programmierbarer Interruptcontroller
+  - Remote Desktop Device Redirector Bus
+  - Synaptics SMBus Driver (driver 16.3.9.0)
+  - System CMOS/Echtzeituhr
+  - Systemzeitgeber
+  - Terminalserver-Maustreiber
+  - Terminalserver-Tastaturtreiber
+  - Treiber für Datei-als-Volume
+  - UMBus-Stamm-Busenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - VMware VMCI Host Device (driver 9.5.10.0)
+  - Volume-Verwaltung
+  - Xeon(R) processor E3-1200 v2/3rd Gen Core processor PCI Express Root Port - 0151 (driver 9.3.0.1011)
++ Universal Serial Bus controllers
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26 (driver 9.3.0.1011)
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D (driver 9.3.0.1011)
+  - Intel(R) USB 3.0 eXtensible-Hostcontroller (driver 1.0.6.245)
+  - Intel(R) USB 3.0-Root-Hub (driver 1.0.6.245)
+  - USB 2.0-Hub (driver 1.0.6.245)
+  - USB 3.0-Hub (driver 1.0.6.245)
+  - USB-Root-Hub
+  - USB-Root-Hub
+  - USB-Verbundgerät
+  - USB-Verbundgerät
+
+disassembling:
+[...]
+004081e5       add     eax, eax
+004081e7       jo      loc_408219
+004081e9       add     eax, $e
+004081ec       jo      loc_408219
+004081ee       call    -$3dd7 ($40441c)       ; System.@GetMem
+004081f3     > add     eax, $c
+004081f6       pop     edx
+004081f7       mov     dword ptr [eax-8], 1
+004081fe       mov     [eax-4], edx
+00408201       mov     word ptr [eax+edx*2], 0
+00408207       mov     word ptr [eax-$a], 2
+[...]
+
+date/time         : 2015-07-09, 15:15:23, 180ms
+computer name     : NATSC0089
+user name         : ladmin <admin>
+registered owner  : zz_sccmnaa / SATSC0049
+operating system  : Windows 7 Service Pack 1 build 7601
+system language   : German
+system up time    : 4 days 16 hours
+program up time   : 1 minute 2 seconds
+processors        : 4x Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+physical memory   : 1198/3036 MB (free/total)
+free disk space   : (C:) 200,14 GB (F:) 6,16 GB
+display mode      : 1920x1080, 32 bit
+process id        : $13f4
+allocated memory  : 60,08 MB
+executable        : ChromaTest.exe
+exec. date/time   : 2015-07-09 15:14
+compiled with     : Delphi 2010
+madExcept version : 3.0o
+callstack crc     : $417bb237, $a486b025, $a486b025
+exception number  : 1
+exception class   : EInvalidPointer
+exception message : Ungültige Zeigeroperation.
+
+main thread ($2d14):
+00409148 +038 ChromaTest.exe System     47 +0 @DynArrayClear
+00408679 +0f5 ChromaTest.exe System     47 +0 @FinalizeArray
+00408558 +024 ChromaTest.exe System     47 +0 @FinalizeRecord
+00405622 +012 ChromaTest.exe System     47 +0 TObject.CleanupInstance
+00405565 +005 ChromaTest.exe System     47 +0 TObject.FreeInstance
+00405b1a +002 ChromaTest.exe System     47 +0 @ClassDestroy
+005148b1 +01d ChromaTest.exe CP.Chroma  88 +8 TChroma.Destroy
+004055b4 +008 ChromaTest.exe System     47 +0 TObject.Free
+004dbe8b +06f ChromaTest.exe Controls         TControl.Click
+004bd85a +01e ChromaTest.exe StdCtrls         TCustomButton.Click
+004be2c0 +010 ChromaTest.exe StdCtrls         TCustomButton.CNCommand
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls         TButtonControl.WndProc
+004db544 +024 ChromaTest.exe Controls         TControl.Perform
+004e033b +023 ChromaTest.exe Controls         DoControlMsg
+004e0da3 +00b ChromaTest.exe Controls         TWinControl.WMCommand
+00503900 +02c ChromaTest.exe Forms            TCustomForm.WMCommand
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+00500808 +594 ChromaTest.exe Forms            TCustomForm.WndProc
+004df888 +02c ChromaTest.exe Controls         TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes          StdWndProc
+75a2557d +044 USER32.dll                      SendMessageW
+75a21b52 +016 USER32.dll                      CallWindowProcW
+004e02e8 +0d8 ChromaTest.exe Controls         TWinControl.DefaultHandler
+004dc2dc +010 ChromaTest.exe Controls         TControl.WMLButtonUp
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls         TButtonControl.WndProc
+004df888 +02c ChromaTest.exe Controls         TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes          StdWndProc
+75a2cc6b +00a USER32.dll                      DispatchMessageW
+0050986d +11d ChromaTest.exe Forms            TApplication.ProcessMessage
+005098b2 +00a ChromaTest.exe Forms            TApplication.HandleMessage
+00509bdd +0c9 ChromaTest.exe Forms            TApplication.Run
+00526ed1 +049 ChromaTest.exe ChromaTest 50 +4 initialization
+7596ee1a +010 kernel32.dll                    BaseThreadInitThunk
+
+thread $2894:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+thread $1d90:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+modules:
+00400000 ChromaTest.exe                              F:\GitHub\ChromaPrint\Tests_Delphi
+00580000 FastMM_FullDebugMode.dll 1.60.0.5           F:\GitHub\ChromaPrint\Tests_Delphi
+57770000 btmmhook.dll             6.5.1.2300         C:\Program Files\WIDCOMM\Bluetooth Software
+6a740000 dbghelp.dll              6.1.7601.17514     C:\Windows\system32
+70c10000 SHFolder.dll             6.1.7600.16385     C:\Windows\system32
+717a0000 wsock32.dll              6.1.7600.16385     C:\Windows\system32
+733d0000 winspool.drv             6.1.7601.17514     C:\Windows\system32
+73770000 propsys.dll              7.0.7601.17514     C:\Windows\system32
+739f0000 ntmarta.dll              6.1.7600.16385     C:\Windows\system32
+74060000 version.dll              6.1.7600.16385     C:\Windows\system32
+74170000 dwmapi.dll               6.1.7600.16385     C:\Windows\system32
+74190000 uxtheme.dll              6.1.7600.16385     C:\Windows\system32
+74790000 comctl32.dll             6.10.7601.17514    C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2
+74cf0000 msimg32.dll              6.1.7600.16385     C:\Windows\system32
+75340000 SspiCli.dll              6.1.7601.18443     C:\Windows\system32
+753b0000 CRYPTBASE.dll            6.1.7600.16385     C:\Windows\system32
+754e0000 DEVOBJ.dll               6.1.7600.16385     C:\Windows\system32
+756e0000 KERNELBASE.dll           6.1.7601.18409     C:\Windows\system32
+75730000 CFGMGR32.dll             6.1.7601.17514     C:\Windows\system32
+75760000 advapi32.dll             6.1.7601.17514     C:\Windows\system32
+75920000 kernel32.dll             6.1.7601.18409     C:\Windows\system32
+75a00000 LPK.dll                  6.1.7601.18177     C:\Windows\system32
+75a10000 USER32.dll               6.1.7601.17514     C:\Windows\system32
+75ae0000 PSAPI.DLL                6.1.7600.16385     C:\Windows\system32
+75c10000 NSI.dll                  6.1.7600.16385     C:\Windows\system32
+75c20000 oleaut32.dll             6.1.7601.18640     C:\Windows\system32
+75cb0000 comdlg32.dll             6.1.7601.17514     C:\Windows\system32
+75d30000 IMM32.DLL                6.1.7601.17514     C:\Windows\system32
+75d50000 sechost.dll              6.1.7600.16385     C:\Windows\SYSTEM32
+75d70000 WS2_32.dll               6.1.7601.17514     C:\Windows\system32
+75e10000 msvcrt.dll               7.0.7601.17744     C:\Windows\system32
+76080000 RPCRT4.dll               6.1.7601.18532     C:\Windows\system32
+76130000 MSCTF.dll                6.1.7600.16385     C:\Windows\system32
+76200000 imagehlp.dll             6.1.7601.18288     C:\Windows\system32
+76230000 ole32.dll                6.1.7601.17514     C:\Windows\system32
+76390000 WLDAP32.dll              6.1.7601.17514     C:\Windows\system32
+763f0000 SHELL32.dll              6.1.7601.18517     C:\Windows\system32
+77040000 CLBCatQ.DLL              2001.12.8530.16385 C:\Windows\system32
+770d0000 SETUPAPI.dll             6.1.7601.17514     C:\Windows\system32
+77270000 SHLWAPI.dll              6.1.7601.17514     C:\Windows\system32
+772d0000 ntdll.dll                6.1.7601.18205     C:\Windows\SYSTEM32
+77410000 USP10.dll                1.626.7601.18454   C:\Windows\system32
+774b0000 GDI32.dll                6.1.7601.18577     C:\Windows\system32
+
+processes:
+0000 Idle                            0 0    0
+0004 System                          0 0    0
+01a8 smss.exe                        0 0    0   normal       C:\Windows\system32
+026c csrss.exe                       0 0    0   normal       C:\Windows\system32
+02bc wininit.exe                     0 0    0   high         C:\Windows\system32
+02c4 csrss.exe                       1 176  81  normal       C:\Windows\system32
+02fc winlogon.exe                    1 6    0   high         C:\Windows\system32
+0328 services.exe                    0 0    0   normal       C:\Windows\system32
+0330 lsass.exe                       0 0    0   normal       C:\Windows\system32
+0338 lsm.exe                         0 0    0   normal       C:\Windows\system32
+03a0 svchost.exe                     0 0    0   normal       C:\Windows\system32
+03e4 TcNcI.exe                       0 0    0   high         C:\TwinCAT\CNC
+0408 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0460 MsMpEng.exe                     0 0    0   normal       c:\Program Files\Microsoft Security Client
+04d8 atiesrxx.exe                    0 0    0   normal       C:\Windows\system32
+04f8 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0528 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0540 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0568 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0588 STacSV.exe                      0 0    0   normal       C:\Program Files\IDT\WDM
+06ac Hpservice.exe                   0 0    0   normal       C:\Windows\system32
+06d4 atieclxx.exe                    1 9    10  normal       C:\Windows\system32
+079c SbieSvc.exe                     0 0    0   normal       C:\Program Files\Sandboxie
+01b8 vcsFPService.exe                0 0    0   normal       C:\Windows\system32
+0454 svchost.exe                     0 0    0   normal       C:\Windows\system32
+07b0 spoolsv.exe                     0 0    0   normal       C:\Windows\System32
+0814 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0884 almsrvx.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\sws\almsrv
+089c AppleMobileDeviceService.exe    0 0    0   normal       C:\Program Files\Common Files\Apple\Mobile Device Support
+08f4 BSQLServer.exe                  0 0    0   normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+09bc mDNSResponder.exe               0 0    0   normal       C:\Program Files\Bonjour
+09d0 btwdins.exe                     0 0    0   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0a24 cvpnd.exe                       0 0    0   normal       C:\Program Files\Cisco Systems\VPN Client
+0abc taskhost.exe                    1 31   23  normal       C:\Windows\system32
+0ad8 DWRCS.EXE                       0 0    0   normal       C:\Windows\dwrcs
+0b14 taskeng.exe                     1 12   3   normal       C:\Windows\system32
+0b50 Dwm.exe                         1 23   3   high         C:\Windows\system32
+0b94 ipoint.exe                      1 27   49  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0b9c Explorer.EXE                    1 899  570 normal       C:\Windows
+0bd4 itype.exe                       1 23   39  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0c40 EngineerVistaSupportService.exe 0 0    0   normal       C:\Windows\system32
+0d18 fbguard.exe                     0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+0d70 DWRCST.exe                      1 21   11  normal       C:\Windows\dwrcs
+0e0c QLBController.exe               1 18   16  normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0e1c sttray.exe                      1 18   17  normal       C:\Program Files\IDT\WDM
+0e50 hasplms.exe                     0 0    0   normal       C:\Windows\system32
+0e70 HPHotkeyMonitor.exe             0 0    0   normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0eec iusb3mon.exe                    1 21   8   normal       C:\Program Files\Intel\Intel(R) USB 3.0 eXtensible Host Controller Driver\Application
+0f20 SynTPEnh.exe                    1 94   43  above normal C:\Program Files\Synaptics\SynTP
+0f3c HeciServer.exe                  0 0    0   normal       C:\Program Files\Intel\iCLS Client
+0f64 jhi_service.exe                 0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\DAL
+0f84 Lenze.Server.PackageManager.exe 0 0    0   normal       C:\Program Files\Lenze\PackageManager
+0f94 TcSysUI.exe                     1 55   19  normal       C:\TwinCAT
+0f9c fpassist.exe                    1 32   19  normal       C:\Program Files\FreePDF_XP
+0fc0 CNMNSST.exe                     1 34   13  normal       C:\Program Files\Canon\IJ Network Scanner Selector EX
+0fc8 msseces.exe                     1 184  116 normal       C:\Program Files\Microsoft Security Client
+091c SYNTPHELPER.EXE                 1 9    3   above normal C:\PROGRAM FILES\SYNAPTICS\SYNTP
+0a18 TSVNCache.exe                   1 12   4   normal       C:\Program Files\TortoiseSVN\bin
+0c14 SbieCtrl.exe                    1 123  56  normal       C:\Program Files\Sandboxie
+0c84 MOM.exe                         1 10   9   normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+0dd4 MSOSYNC.EXE                     1 64   21  normal       C:\Program Files\Microsoft Office\Office14
+0de4 BTTray.exe                      1 95   17  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0be8 sqlservr.exe                    0 0    0   normal       c:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\Binn
+10b4 svchost.exe                     0 0    0   normal       C:\Windows\system32
+10c8 rndlresolversvc.exe             0 0    0   normal       C:\Program Files\RealNetworks\RealDownloader
+10f4 s7hspsvx.exe                    0 0    0   normal       C:\Program Files\Siemens\Step7\s7bin
+1114 s7oiehsx.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\S7IEPG
+1194 S7TraceServiceX.exe             0 0    0   normal       C:\Program Files\Common Files\Siemens\Automation\TraceEngine\bin
+11b4 CCC.exe                         1 64   45  normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+11ec sqlwriter.exe                   0 0    0   normal       C:\Program Files\Microsoft SQL Server\90\Shared
+1248 ss_conn_service.exe             0 0    0   normal       C:\Program Files\Samsung\USB Drivers\25_escape\conn
+1264 svchost.exe                     0 0    0   normal       C:\Windows\system32
+12e4 TeamViewer_Service.exe          0 0    0   normal       C:\Program Files\TeamViewer
+1318 TCATSysSrv.exe                  0 0    0   high         C:\TwinCAT
+1364 vmnat.exe                       0 0    0   normal       C:\Windows\system32
+1388 PNIOMGR.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+1394 conhost.exe                     0 0    0   normal       C:\Windows\system32
+13d4 vmware-authd.exe                0 0    0   normal       C:\Program Files\VMware\VMware Player
+14d4 vmnetdhcp.exe                   0 0    0   normal       C:\Windows\system32
+14e8 vmware-usbarbitrator.exe        0 0    0   normal       C:\Program Files\Common Files\VMware\USB
+1754 BtStackServer.exe               1 46   10  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0498 IAStorIcon.exe                  1 37   14  normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+0d5c hpqWmiEx.exe                    0 0    0   normal       C:\Program Files\Hewlett-Packard\Shared
+1924 svchost.exe                     0 0    0   normal       C:\Windows\System32
+1938 unsecapp.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1954 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+195c wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19b0 NisSrv.exe                      0 0    0   normal       c:\Program Files\Microsoft Security Client
+1a64 SearchIndexer.exe               0 0    0   normal       C:\Windows\system32
+1afc fbserver.exe                    0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+1b74 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1c10 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1c80 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1d34 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1dd0 wmpnetwk.exe                    0 0    0   normal       C:\Program Files\Windows Media Player
+1e30 BTHSAmpPalService.exe           0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e48 BTHSSecurityMgr.exe             0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e34 CcmExec.exe                     0 0    0   normal       C:\Windows\CCM
+0fa4 CmRcService.exe                 0 0    0   normal       C:\Windows\CCM\RemCtrl
+19a8 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+04c8 IAStorDataMgrSvc.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+1054 IntelMeFWService.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\FWService
+1c0c LMS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\LMS
+19f8 PrivacyIconClient.exe           1 97   43  normal       C:\Program Files\Intel\Intel(R) Management Engine Components\IMSS
+04b0 UNS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\UNS
+1df4 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1f74 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19bc wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+0384 SCNotification.exe              1 15   10  normal       C:\Windows\CCM
+25d0 Skype.exe                       1 252  133 normal       C:\Program Files\Skype\Phone
+1cd4 Bluetooth Headset Helper.exe    1 35   5   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+1424 pniopcac.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+210c realsched.exe                   1 9    9   normal       C:\Program Files\Real\RealPlayer\update
+08d8 chrome.exe                      1 177  72  normal       C:\Program Files\Google\Chrome\Application
+0fe0 chrome.exe                      1 4    4   normal       C:\Program Files\Google\Chrome\Application
+2770 chrome.exe                      1 5    1   idle         C:\Program Files\Google\Chrome\Application
+2c10 chrome.exe                      1 5    1   normal       C:\Program Files\Google\Chrome\Application
+2834 notepad++.exe                   1 431  320 normal       C:\Program Files\Notepad++
+2acc bds.exe                         1 4584 625 normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+25c4 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2624 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2814 dexplore.exe                    1 175  172 normal       c:\Program Files\Common Files\Microsoft Shared\Help 9
+1f08 calc.exe                        1 190  165 normal       C:\Windows\system32
+0ebc audiodg.exe                     0 0    0
+1da4 NOTEPAD.EXE                     1 23   20  normal       C:\Windows\system32
+13f4 ChromaTest.exe                  1 80   67  normal       F:\GitHub\ChromaPrint\Tests_Delphi
+
+hardware:
++ Batteries
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft Composite Battery
+  - Microsoft-Netzteil
++ Biometric Devices
+  - Validity Sensor (driver 4.4.213.0)
++ Bluetooth Radios
+  - Broadcom 20702 Bluetooth 4.0 Adapter (driver 6.5.1.1785)
+  - Microsoft Bluetooth-Auflistung
++ Bluetooth Virtual Devices
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Imaging Responder (driver 6.5.1.1770)
+  - Bluetooth L2CAP Interface (driver 6.5.1.100)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth Remote Control (driver 6.5.1.1770)
+  - Bluetooth SyncML (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
++ Computer
+  - ACPI x86-basierter PC
++ Disk drives
+  - JMCR SD SCSI Disk Device
+  - ST1000LM014-1EJ164
++ Display adapters
+  - AMD Radeon HD 7700M Series (driver 14.301.1001.0)
+  - DameWare Development Mirror Driver (driver 1.1.0.0)
++ DVD/CD-ROM drives
+  - hp CDDVDW SN-208DB
++ Human Interface Devices
+  - Bluetooth Remote Control (driver 6.5.1.1240)
+  - HID-konformes Benutzersteuergerät
+  - HID-konformes Gerät
+  - HID-konformes Gerät
+  - Microsoft-Hardware – USB-Maus
+  - USB-Eingabegerät
+  - USB-Eingabegerät
++ IDE ATA/ATAPI controllers
+  - Intel(R) 7 Series Chipset Family SATA AHCI Controller (driver 11.1.0.1006)
++ IEEE 1394 Bus host controllers
+  - JMicron OHCI Compliant IEEE 1394 Host Controller (driver 1.0.23.1)
++ Imaging devices
+  - HP HD Webcam [Fixed] (driver 3.4.8.16)
++ Intel® Centrino® Wireless Bluetooth® + High Speed Geräte
+  - Intel® Centrino® Wireless Bluetooth® + High Speed - Virtueller Adapter (driver 15.1.0.4)
++ Keyboards
+  - DameWare Virtual Keyboard Emulation for Standard Keyboard (driver 1.0.0.1)
+  - HID-Tastatur
+  - Standard 101/102-Key or Microsoft Natural PS/2 Keyboard with HP QLB (driver 7.0.1.1)
++ Memory technology driver
+  - JMicron PCIe SD Host Controller (driver 1.0.68.0)
+  - JMicron PCIe SD/MMC Host Controller (driver 1.0.68.0)
++ Mice and other pointing devices
+  - Microsoft USB Wheel Mouse Optical (Mouse and Keyboard Center)
+  - Synaptics SMBus TouchPad (driver 16.3.9.0)
++ Modems
+  - Standardmäßige Modem-über-Bluetooth-Verbindung
++ Monitors
+  - PnP-Monitor (Standard)
+  - PnP-Monitor (Standard)
++ Network adapters
+  - Bluetooth Personal Area Network (driver 6.5.1.300)
+  - Cisco Systems VPN Adapter (driver 5.0.0.1)
+  - Intel(R) 82579LM Gigabit Network Connection (driver 11.12.36.0)
+  - Intel(R) Centrino(R) Advanced-N 6205 (driver 15.1.1.1)
+  - Microsoft-Adapter für Miniports virtueller WiFis
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.18.0)
+  - VMware Virtual Ethernet Adapter for VMnet1 (driver 4.2.1.0)
+  - VMware Virtual Ethernet Adapter for VMnet8 (driver 4.2.1.0)
++ Portable Devices
+  - F:\
++ Ports (COM & LPT)
+  - ECP Printer Port (LPT1)
+  - Intel(R) Active Management Technology - SOL (COM3) (driver 8.0.0.1262)
+  - Kommunikationsanschluss (COM1)
++ Processors
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
++ Security Devices
+  - Trusted Platform Module 1.2
++ Sensors
+  - HP Mobile Data Protection Sensor (driver 5.0.2.9)
++ SIMATIC NET
+  - SIMATIC MPI/PROFIBUS DPX2 Driver (driver 8.3.0.0)
+  - SIMATIC NET DP Driver (driver 8.1.0.4270)
+  - SIMATIC NET FDL Driver (driver 8.1.0.4270)
+  - SIMATIC NET Softnet Trace Driver (driver 8.0.0.4136)
+  - SIMATIC Transport (driver 8.3.0.0)
+  - SIMATIC TS Adapter RS232-32 (driver 8.3.0.0)
+  - SIMATIC USB (driver 8.3.0.0)
++ Sound, video and game controllers
+  - AMD High Definition Audio Device (driver 7.12.0.7719)
+  - Bluetooth-Audio (driver 6.5.1.1750)
+  - IDT High Definition Audio CODEC (driver 6.10.6398.0)
++ Storage controllers
+  - JMicron JMB36X Controller (driver 1.17.64.0)
++ Storage volume shadow copies
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
++ System devices
+  - 3rd Gen Core processor DRAM Controller - 0154 (driver 9.3.0.1011)
+  - ACPI-Deckel
+  - ACPI-Energiezustandknopf
+  - ACPI-Schalter
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - Busenumerator für Verbundgeräte
+  - DMA-Controller
+  - Eingebetteter, Microsoft ACPI-konformer Controller
+  - Enumerator-Treiber für Microsoft Virtual Drive
+  - Erweiterter E/A-Bus
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - High Definition Audio-Controller
+  - High Definition Audio-Controller
+  - Hochpräzisionsereigniszeitgeber
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 1 - 1E10 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 2 - 1E12 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 3 - 1E14 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 4 - 1E16 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 5 - 1E18 (driver 9.3.0.1020)
+  - Intel(R) 82802 Firmwarehub
+  - Intel(R) Management Engine Interface  (driver 8.0.0.1262)
+  - Intel(R) QM77 Express Chipset LPC Controller - 1E55 (driver 9.3.0.1020)
+  - IPBusEnum Root Enumerator
+  - Logische Schnittstelle für Druckeranschluss
+  - Microsoft ACPI-konformes System
+  - Microsoft Windows-Verwaltungsschnittstelle für ACPI
+  - Microsoft-Systemverwaltungs-BIOS-Treiber
+  - Numerischer Coprozessor
+  - PCI bus (driver 1.0.6.245)
+  - PnP-Softwaregeräte-Enumerator
+  - Programmierbarer Interruptcontroller
+  - Remote Desktop Device Redirector Bus
+  - Synaptics SMBus Driver (driver 16.3.9.0)
+  - System CMOS/Echtzeituhr
+  - Systemzeitgeber
+  - Terminalserver-Maustreiber
+  - Terminalserver-Tastaturtreiber
+  - Treiber für Datei-als-Volume
+  - UMBus-Stamm-Busenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - VMware VMCI Host Device (driver 9.5.10.0)
+  - Volume-Verwaltung
+  - Xeon(R) processor E3-1200 v2/3rd Gen Core processor PCI Express Root Port - 0151 (driver 9.3.0.1011)
++ Universal Serial Bus controllers
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26 (driver 9.3.0.1011)
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D (driver 9.3.0.1011)
+  - Intel(R) USB 3.0 eXtensible-Hostcontroller (driver 1.0.6.245)
+  - Intel(R) USB 3.0-Root-Hub (driver 1.0.6.245)
+  - USB 2.0-Hub (driver 1.0.6.245)
+  - USB 3.0-Hub (driver 1.0.6.245)
+  - USB-Root-Hub
+  - USB-Root-Hub
+  - USB-Verbundgerät
+  - USB-Verbundgerät
+
+disassembling:
+[...]
+00409137      jz      loc_409140
+00409139      mov     edx, [edx]
+0040913b      call    -$bbc ($408584)        ; System.@FinalizeArray
+00409140      sub     eax, 8
+00409143      call    -$4d10 ($404438)       ; System.@FreeMem
+00409148    > pop     eax
+00409149      ret
+
+date/time         : 2015-07-09, 15:28:47, 269ms
+computer name     : NATSC0089
+user name         : ladmin <admin>
+registered owner  : zz_sccmnaa / SATSC0049
+operating system  : Windows 7 Service Pack 1 build 7601
+system language   : German
+system up time    : 4 days 16 hours
+program up time   : 31 seconds
+processors        : 4x Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+physical memory   : 1174/3036 MB (free/total)
+free disk space   : (C:) 200,14 GB (F:) 6,16 GB
+display mode      : 1920x1080, 32 bit
+process id        : $2668
+allocated memory  : 60,08 MB
+executable        : ChromaTest.exe
+exec. date/time   : 2015-07-09 15:28
+compiled with     : Delphi 2010
+madExcept version : 3.0o
+callstack crc     : $417bb237, $c4b7c2c8, $c4b7c2c8
+exception number  : 1
+exception class   : EInvalidPointer
+exception message : Ungültige Zeigeroperation.
+
+main thread ($1be8):
+00409148 +038 ChromaTest.exe System     47 +0 @DynArrayClear
+00408e50 +000 ChromaTest.exe System     47 +0 DynArrayClear
+00408e87 +02f ChromaTest.exe System     47 +0 DynArraySetLength
+00408ff5 +005 ChromaTest.exe System     47 +0 @DynArraySetLength
+0051185f +04b ChromaTest.exe CP.Chroma  83 +3 TChroma.Destroy
+004055b4 +008 ChromaTest.exe System     47 +0 TObject.Free
+004dbe8b +06f ChromaTest.exe Controls         TControl.Click
+004bd85a +01e ChromaTest.exe StdCtrls         TCustomButton.Click
+004be2c0 +010 ChromaTest.exe StdCtrls         TCustomButton.CNCommand
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls         TButtonControl.WndProc
+004db544 +024 ChromaTest.exe Controls         TControl.Perform
+004e033b +023 ChromaTest.exe Controls         DoControlMsg
+004e0da3 +00b ChromaTest.exe Controls         TWinControl.WMCommand
+00503900 +02c ChromaTest.exe Forms            TCustomForm.WMCommand
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+00500808 +594 ChromaTest.exe Forms            TCustomForm.WndProc
+004df888 +02c ChromaTest.exe Controls         TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes          StdWndProc
+75a2557d +044 USER32.dll                      SendMessageW
+75a21b52 +016 USER32.dll                      CallWindowProcW
+004e02e8 +0d8 ChromaTest.exe Controls         TWinControl.DefaultHandler
+004dc2dc +010 ChromaTest.exe Controls         TControl.WMLButtonUp
+004db920 +2d4 ChromaTest.exe Controls         TControl.WndProc
+004e01e8 +568 ChromaTest.exe Controls         TWinControl.WndProc
+004bd520 +06c ChromaTest.exe StdCtrls         TButtonControl.WndProc
+004df888 +02c ChromaTest.exe Controls         TWinControl.MainWndProc
+004a1270 +014 ChromaTest.exe Classes          StdWndProc
+75a2cc6b +00a USER32.dll                      DispatchMessageW
+0050986d +11d ChromaTest.exe Forms            TApplication.ProcessMessage
+005098b2 +00a ChromaTest.exe Forms            TApplication.HandleMessage
+00509bdd +0c9 ChromaTest.exe Forms            TApplication.Run
+00526ed1 +049 ChromaTest.exe ChromaTest 50 +4 initialization
+7596ee1a +010 kernel32.dll                    BaseThreadInitThunk
+
+thread $2e3c:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+thread $1d80:
+77316a72 +0a ntdll.dll     NtWaitForWorkViaWorkerFactory
+7596ee1a +10 kernel32.dll  BaseThreadInitThunk
+
+modules:
+00400000 ChromaTest.exe                              F:\GitHub\ChromaPrint\Tests_Delphi
+00580000 FastMM_FullDebugMode.dll 1.60.0.5           F:\GitHub\ChromaPrint\Tests_Delphi
+57770000 btmmhook.dll             6.5.1.2300         C:\Program Files\WIDCOMM\Bluetooth Software
+6a740000 dbghelp.dll              6.1.7601.17514     C:\Windows\system32
+70c10000 SHFolder.dll             6.1.7600.16385     C:\Windows\system32
+717a0000 wsock32.dll              6.1.7600.16385     C:\Windows\system32
+733d0000 winspool.drv             6.1.7601.17514     C:\Windows\system32
+73770000 propsys.dll              7.0.7601.17514     C:\Windows\system32
+739f0000 ntmarta.dll              6.1.7600.16385     C:\Windows\system32
+74060000 version.dll              6.1.7600.16385     C:\Windows\system32
+74170000 dwmapi.dll               6.1.7600.16385     C:\Windows\system32
+74190000 uxtheme.dll              6.1.7600.16385     C:\Windows\system32
+74790000 comctl32.dll             6.10.7601.17514    C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2
+74cf0000 msimg32.dll              6.1.7600.16385     C:\Windows\system32
+75340000 SspiCli.dll              6.1.7601.18443     C:\Windows\system32
+753b0000 CRYPTBASE.dll            6.1.7600.16385     C:\Windows\system32
+754e0000 DEVOBJ.dll               6.1.7600.16385     C:\Windows\system32
+756e0000 KERNELBASE.dll           6.1.7601.18409     C:\Windows\system32
+75730000 CFGMGR32.dll             6.1.7601.17514     C:\Windows\system32
+75760000 advapi32.dll             6.1.7601.17514     C:\Windows\system32
+75920000 kernel32.dll             6.1.7601.18409     C:\Windows\system32
+75a00000 LPK.dll                  6.1.7601.18177     C:\Windows\system32
+75a10000 USER32.dll               6.1.7601.17514     C:\Windows\system32
+75ae0000 PSAPI.DLL                6.1.7600.16385     C:\Windows\system32
+75c10000 NSI.dll                  6.1.7600.16385     C:\Windows\system32
+75c20000 oleaut32.dll             6.1.7601.18640     C:\Windows\system32
+75cb0000 comdlg32.dll             6.1.7601.17514     C:\Windows\system32
+75d30000 IMM32.DLL                6.1.7601.17514     C:\Windows\system32
+75d50000 sechost.dll              6.1.7600.16385     C:\Windows\SYSTEM32
+75d70000 WS2_32.dll               6.1.7601.17514     C:\Windows\system32
+75e10000 msvcrt.dll               7.0.7601.17744     C:\Windows\system32
+76080000 RPCRT4.dll               6.1.7601.18532     C:\Windows\system32
+76130000 MSCTF.dll                6.1.7600.16385     C:\Windows\system32
+76200000 imagehlp.dll             6.1.7601.18288     C:\Windows\system32
+76230000 ole32.dll                6.1.7601.17514     C:\Windows\system32
+76390000 WLDAP32.dll              6.1.7601.17514     C:\Windows\system32
+763f0000 SHELL32.dll              6.1.7601.18517     C:\Windows\system32
+77040000 CLBCatQ.DLL              2001.12.8530.16385 C:\Windows\system32
+770d0000 SETUPAPI.dll             6.1.7601.17514     C:\Windows\system32
+77270000 SHLWAPI.dll              6.1.7601.17514     C:\Windows\system32
+772d0000 ntdll.dll                6.1.7601.18205     C:\Windows\SYSTEM32
+77410000 USP10.dll                1.626.7601.18454   C:\Windows\system32
+774b0000 GDI32.dll                6.1.7601.18577     C:\Windows\system32
+
+processes:
+0000 Idle                            0 0    0
+0004 System                          0 0    0
+01a8 smss.exe                        0 0    0   normal       C:\Windows\system32
+026c csrss.exe                       0 0    0   normal       C:\Windows\system32
+02bc wininit.exe                     0 0    0   high         C:\Windows\system32
+02c4 csrss.exe                       1 176  81  normal       C:\Windows\system32
+02fc winlogon.exe                    1 6    0   high         C:\Windows\system32
+0328 services.exe                    0 0    0   normal       C:\Windows\system32
+0330 lsass.exe                       0 0    0   normal       C:\Windows\system32
+0338 lsm.exe                         0 0    0   normal       C:\Windows\system32
+03a0 svchost.exe                     0 0    0   normal       C:\Windows\system32
+03e4 TcNcI.exe                       0 0    0   high         C:\TwinCAT\CNC
+0408 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0460 MsMpEng.exe                     0 0    0   normal       c:\Program Files\Microsoft Security Client
+04d8 atiesrxx.exe                    0 0    0   normal       C:\Windows\system32
+04f8 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0528 svchost.exe                     0 0    0   normal       C:\Windows\System32
+0540 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0568 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0588 STacSV.exe                      0 0    0   normal       C:\Program Files\IDT\WDM
+06ac Hpservice.exe                   0 0    0   normal       C:\Windows\system32
+06d4 atieclxx.exe                    1 9    10  normal       C:\Windows\system32
+079c SbieSvc.exe                     0 0    0   normal       C:\Program Files\Sandboxie
+01b8 vcsFPService.exe                0 0    0   normal       C:\Windows\system32
+0454 svchost.exe                     0 0    0   normal       C:\Windows\system32
+07b0 spoolsv.exe                     0 0    0   normal       C:\Windows\System32
+0814 svchost.exe                     0 0    0   normal       C:\Windows\system32
+0884 almsrvx.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\sws\almsrv
+089c AppleMobileDeviceService.exe    0 0    0   normal       C:\Program Files\Common Files\Apple\Mobile Device Support
+08f4 BSQLServer.exe                  0 0    0   normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+09bc mDNSResponder.exe               0 0    0   normal       C:\Program Files\Bonjour
+09d0 btwdins.exe                     0 0    0   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0a24 cvpnd.exe                       0 0    0   normal       C:\Program Files\Cisco Systems\VPN Client
+0abc taskhost.exe                    1 31   21  normal       C:\Windows\system32
+0ad8 DWRCS.EXE                       0 0    0   normal       C:\Windows\dwrcs
+0b14 taskeng.exe                     1 12   3   normal       C:\Windows\system32
+0b50 Dwm.exe                         1 23   3   high         C:\Windows\system32
+0b94 ipoint.exe                      1 27   50  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0b9c Explorer.EXE                    1 905  568 normal       C:\Windows
+0bd4 itype.exe                       1 23   39  normal       c:\Program Files\Microsoft Mouse and Keyboard Center
+0c40 EngineerVistaSupportService.exe 0 0    0   normal       C:\Windows\system32
+0d18 fbguard.exe                     0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+0d70 DWRCST.exe                      1 21   11  normal       C:\Windows\dwrcs
+0e0c QLBController.exe               1 18   16  normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0e1c sttray.exe                      1 18   17  normal       C:\Program Files\IDT\WDM
+0e50 hasplms.exe                     0 0    0   normal       C:\Windows\system32
+0e70 HPHotkeyMonitor.exe             0 0    0   normal       C:\Program Files\Hewlett-Packard\HP Hotkey Support
+0eec iusb3mon.exe                    1 21   8   normal       C:\Program Files\Intel\Intel(R) USB 3.0 eXtensible Host Controller Driver\Application
+0f20 SynTPEnh.exe                    1 94   43  above normal C:\Program Files\Synaptics\SynTP
+0f3c HeciServer.exe                  0 0    0   normal       C:\Program Files\Intel\iCLS Client
+0f64 jhi_service.exe                 0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\DAL
+0f84 Lenze.Server.PackageManager.exe 0 0    0   normal       C:\Program Files\Lenze\PackageManager
+0f94 TcSysUI.exe                     1 55   19  normal       C:\TwinCAT
+0f9c fpassist.exe                    1 32   19  normal       C:\Program Files\FreePDF_XP
+0fc0 CNMNSST.exe                     1 34   13  normal       C:\Program Files\Canon\IJ Network Scanner Selector EX
+0fc8 msseces.exe                     1 184  116 normal       C:\Program Files\Microsoft Security Client
+091c SYNTPHELPER.EXE                 1 9    3   above normal C:\PROGRAM FILES\SYNAPTICS\SYNTP
+0a18 TSVNCache.exe                   1 12   4   normal       C:\Program Files\TortoiseSVN\bin
+0c14 SbieCtrl.exe                    1 123  56  normal       C:\Program Files\Sandboxie
+0c84 MOM.exe                         1 10   9   normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+0dd4 MSOSYNC.EXE                     1 64   21  normal       C:\Program Files\Microsoft Office\Office14
+0de4 BTTray.exe                      1 95   17  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0be8 sqlservr.exe                    0 0    0   normal       c:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\Binn
+10b4 svchost.exe                     0 0    0   normal       C:\Windows\system32
+10c8 rndlresolversvc.exe             0 0    0   normal       C:\Program Files\RealNetworks\RealDownloader
+10f4 s7hspsvx.exe                    0 0    0   normal       C:\Program Files\Siemens\Step7\s7bin
+1114 s7oiehsx.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\S7IEPG
+1194 S7TraceServiceX.exe             0 0    0   normal       C:\Program Files\Common Files\Siemens\Automation\TraceEngine\bin
+11b4 CCC.exe                         1 64   45  normal       C:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+11ec sqlwriter.exe                   0 0    0   normal       C:\Program Files\Microsoft SQL Server\90\Shared
+1248 ss_conn_service.exe             0 0    0   normal       C:\Program Files\Samsung\USB Drivers\25_escape\conn
+1264 svchost.exe                     0 0    0   normal       C:\Windows\system32
+12e4 TeamViewer_Service.exe          0 0    0   normal       C:\Program Files\TeamViewer
+1318 TCATSysSrv.exe                  0 0    0   high         C:\TwinCAT
+1364 vmnat.exe                       0 0    0   normal       C:\Windows\system32
+1388 PNIOMGR.exe                     0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+1394 conhost.exe                     0 0    0   normal       C:\Windows\system32
+13d4 vmware-authd.exe                0 0    0   normal       C:\Program Files\VMware\VMware Player
+14d4 vmnetdhcp.exe                   0 0    0   normal       C:\Windows\system32
+14e8 vmware-usbarbitrator.exe        0 0    0   normal       C:\Program Files\Common Files\VMware\USB
+1754 BtStackServer.exe               1 46   10  normal       C:\Program Files\WIDCOMM\Bluetooth Software
+0498 IAStorIcon.exe                  1 37   14  normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+0d5c hpqWmiEx.exe                    0 0    0   normal       C:\Program Files\Hewlett-Packard\Shared
+1924 svchost.exe                     0 0    0   normal       C:\Windows\System32
+1938 unsecapp.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1954 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+195c wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19b0 NisSrv.exe                      0 0    0   normal       c:\Program Files\Microsoft Security Client
+1a64 SearchIndexer.exe               0 0    0   normal       C:\Windows\system32
+1afc fbserver.exe                    0 0    0   normal       C:\Program Files\Firebird\Firebird_2_5\bin
+1b74 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1c10 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1c80 svchost.exe                     0 0    0   normal       C:\Windows\system32
+1d34 WUDFHost.exe                    0 0    0   normal       C:\Windows\System32
+1dd0 wmpnetwk.exe                    0 0    0   normal       C:\Program Files\Windows Media Player
+1e30 BTHSAmpPalService.exe           0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e48 BTHSSecurityMgr.exe             0 0    0   normal       C:\Program Files\Intel\BluetoothHS
+1e34 CcmExec.exe                     0 0    0   normal       C:\Windows\CCM
+0fa4 CmRcService.exe                 0 0    0   normal       C:\Windows\CCM\RemCtrl
+19a8 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+04c8 IAStorDataMgrSvc.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Rapid Storage Technology
+1054 IntelMeFWService.exe            0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\FWService
+1c0c LMS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\LMS
+19f8 PrivacyIconClient.exe           1 97   43  normal       C:\Program Files\Intel\Intel(R) Management Engine Components\IMSS
+04b0 UNS.exe                         0 0    0   normal       C:\Program Files\Intel\Intel(R) Management Engine Components\UNS
+1df4 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+1f74 wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+19bc wmiprvse.exe                    0 0    0   normal       C:\Windows\system32\wbem
+0384 SCNotification.exe              1 15   10  normal       C:\Windows\CCM
+25d0 Skype.exe                       1 252  133 normal       C:\Program Files\Skype\Phone
+1cd4 Bluetooth Headset Helper.exe    1 35   5   normal       C:\Program Files\WIDCOMM\Bluetooth Software
+1424 pniopcac.exe                    0 0    0   normal       C:\Program Files\Common Files\Siemens\SimNetCom
+210c realsched.exe                   1 9    9   normal       C:\Program Files\Real\RealPlayer\update
+08d8 chrome.exe                      1 177  73  normal       C:\Program Files\Google\Chrome\Application
+0fe0 chrome.exe                      1 4    4   normal       C:\Program Files\Google\Chrome\Application
+2770 chrome.exe                      1 5    1   idle         C:\Program Files\Google\Chrome\Application
+2c10 chrome.exe                      1 5    1   normal       C:\Program Files\Google\Chrome\Application
+2834 notepad++.exe                   1 431  320 normal       C:\Program Files\Notepad++
+2acc bds.exe                         1 4583 632 normal       C:\Program Files\Embarcadero\RAD Studio\7.0\bin
+25c4 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2624 chrome.exe                      1 4    1   idle         C:\Program Files\Google\Chrome\Application
+2814 dexplore.exe                    1 175  172 normal       c:\Program Files\Common Files\Microsoft Shared\Help 9
+1f08 calc.exe                        1 190  165 normal       C:\Windows\system32
+1da4 NOTEPAD.EXE                     1 23   20  normal       C:\Windows\system32
+2c20 audiodg.exe                     0 0    0
+2668 ChromaTest.exe                  1 80   67  normal       F:\GitHub\ChromaPrint\Tests_Delphi
+
+hardware:
++ Batteries
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft ACPI-konforme Kontrollmethodenakku
+  - Microsoft Composite Battery
+  - Microsoft-Netzteil
++ Biometric Devices
+  - Validity Sensor (driver 4.4.213.0)
++ Bluetooth Radios
+  - Broadcom 20702 Bluetooth 4.0 Adapter (driver 6.5.1.1785)
+  - Microsoft Bluetooth-Auflistung
++ Bluetooth Virtual Devices
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Remote Control Target (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth AV Source (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth FTP (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Hands-free AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Headset AG (driver 6.5.1.1770)
+  - Bluetooth Imaging Responder (driver 6.5.1.1770)
+  - Bluetooth L2CAP Interface (driver 6.5.1.100)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth OPP (driver 6.5.1.1770)
+  - Bluetooth Remote Control (driver 6.5.1.1770)
+  - Bluetooth SyncML (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
+  - Not Supported Bluetooth Function (driver 6.5.1.1770)
++ Computer
+  - ACPI x86-basierter PC
++ Disk drives
+  - JMCR SD SCSI Disk Device
+  - ST1000LM014-1EJ164
++ Display adapters
+  - AMD Radeon HD 7700M Series (driver 14.301.1001.0)
+  - DameWare Development Mirror Driver (driver 1.1.0.0)
++ DVD/CD-ROM drives
+  - hp CDDVDW SN-208DB
++ Human Interface Devices
+  - Bluetooth Remote Control (driver 6.5.1.1240)
+  - HID-konformes Benutzersteuergerät
+  - HID-konformes Gerät
+  - HID-konformes Gerät
+  - Microsoft-Hardware – USB-Maus
+  - USB-Eingabegerät
+  - USB-Eingabegerät
++ IDE ATA/ATAPI controllers
+  - Intel(R) 7 Series Chipset Family SATA AHCI Controller (driver 11.1.0.1006)
++ IEEE 1394 Bus host controllers
+  - JMicron OHCI Compliant IEEE 1394 Host Controller (driver 1.0.23.1)
++ Imaging devices
+  - HP HD Webcam [Fixed] (driver 3.4.8.16)
++ Intel® Centrino® Wireless Bluetooth® + High Speed Geräte
+  - Intel® Centrino® Wireless Bluetooth® + High Speed - Virtueller Adapter (driver 15.1.0.4)
++ Keyboards
+  - DameWare Virtual Keyboard Emulation for Standard Keyboard (driver 1.0.0.1)
+  - HID-Tastatur
+  - Standard 101/102-Key or Microsoft Natural PS/2 Keyboard with HP QLB (driver 7.0.1.1)
++ Memory technology driver
+  - JMicron PCIe SD Host Controller (driver 1.0.68.0)
+  - JMicron PCIe SD/MMC Host Controller (driver 1.0.68.0)
++ Mice and other pointing devices
+  - Microsoft USB Wheel Mouse Optical (Mouse and Keyboard Center)
+  - Synaptics SMBus TouchPad (driver 16.3.9.0)
++ Modems
+  - Standardmäßige Modem-über-Bluetooth-Verbindung
++ Monitors
+  - PnP-Monitor (Standard)
+  - PnP-Monitor (Standard)
++ Network adapters
+  - Bluetooth Personal Area Network (driver 6.5.1.300)
+  - Cisco Systems VPN Adapter (driver 5.0.0.1)
+  - Intel(R) 82579LM Gigabit Network Connection (driver 11.12.36.0)
+  - Intel(R) Centrino(R) Advanced-N 6205 (driver 15.1.1.1)
+  - Microsoft-Adapter für Miniports virtueller WiFis
+  - VirtualBox Host-Only Ethernet Adapter (driver 4.3.18.0)
+  - VMware Virtual Ethernet Adapter for VMnet1 (driver 4.2.1.0)
+  - VMware Virtual Ethernet Adapter for VMnet8 (driver 4.2.1.0)
++ Portable Devices
+  - F:\
++ Ports (COM & LPT)
+  - ECP Printer Port (LPT1)
+  - Intel(R) Active Management Technology - SOL (COM3) (driver 8.0.0.1262)
+  - Kommunikationsanschluss (COM1)
++ Processors
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
+  - Intel(R) Core(TM) i5-3360M CPU @ 2.80GHz
++ Security Devices
+  - Trusted Platform Module 1.2
++ Sensors
+  - HP Mobile Data Protection Sensor (driver 5.0.2.9)
++ SIMATIC NET
+  - SIMATIC MPI/PROFIBUS DPX2 Driver (driver 8.3.0.0)
+  - SIMATIC NET DP Driver (driver 8.1.0.4270)
+  - SIMATIC NET FDL Driver (driver 8.1.0.4270)
+  - SIMATIC NET Softnet Trace Driver (driver 8.0.0.4136)
+  - SIMATIC Transport (driver 8.3.0.0)
+  - SIMATIC TS Adapter RS232-32 (driver 8.3.0.0)
+  - SIMATIC USB (driver 8.3.0.0)
++ Sound, video and game controllers
+  - AMD High Definition Audio Device (driver 7.12.0.7719)
+  - Bluetooth-Audio (driver 6.5.1.1750)
+  - IDT High Definition Audio CODEC (driver 6.10.6398.0)
++ Storage controllers
+  - JMicron JMB36X Controller (driver 1.17.64.0)
++ Storage volume shadow copies
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
+  - Standard-Volumeschattenkopie
++ System devices
+  - 3rd Gen Core processor DRAM Controller - 0154 (driver 9.3.0.1011)
+  - ACPI-Deckel
+  - ACPI-Energiezustandknopf
+  - ACPI-Schalter
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - ACPI-Thermozone
+  - Busenumerator für Verbundgeräte
+  - DMA-Controller
+  - Eingebetteter, Microsoft ACPI-konformer Controller
+  - Enumerator-Treiber für Microsoft Virtual Drive
+  - Erweiterter E/A-Bus
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - Hauptplatinenressourcen
+  - High Definition Audio-Controller
+  - High Definition Audio-Controller
+  - Hochpräzisionsereigniszeitgeber
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 1 - 1E10 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 2 - 1E12 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 3 - 1E14 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 4 - 1E16 (driver 9.3.0.1020)
+  - Intel(R) 7 Series/C216 Chipset Family PCI Express Root Port 5 - 1E18 (driver 9.3.0.1020)
+  - Intel(R) 82802 Firmwarehub
+  - Intel(R) Management Engine Interface  (driver 8.0.0.1262)
+  - Intel(R) QM77 Express Chipset LPC Controller - 1E55 (driver 9.3.0.1020)
+  - IPBusEnum Root Enumerator
+  - Logische Schnittstelle für Druckeranschluss
+  - Microsoft ACPI-konformes System
+  - Microsoft Windows-Verwaltungsschnittstelle für ACPI
+  - Microsoft-Systemverwaltungs-BIOS-Treiber
+  - Numerischer Coprozessor
+  - PCI bus (driver 1.0.6.245)
+  - PnP-Softwaregeräte-Enumerator
+  - Programmierbarer Interruptcontroller
+  - Remote Desktop Device Redirector Bus
+  - Synaptics SMBus Driver (driver 16.3.9.0)
+  - System CMOS/Echtzeituhr
+  - Systemzeitgeber
+  - Terminalserver-Maustreiber
+  - Terminalserver-Tastaturtreiber
+  - Treiber für Datei-als-Volume
+  - UMBus-Stamm-Busenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - UMBusenumerator
+  - VMware VMCI Host Device (driver 9.5.10.0)
+  - Volume-Verwaltung
+  - Xeon(R) processor E3-1200 v2/3rd Gen Core processor PCI Express Root Port - 0151 (driver 9.3.0.1011)
++ Universal Serial Bus controllers
+  - Generic USB Hub
+  - Generic USB Hub
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26 (driver 9.3.0.1011)
+  - Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D (driver 9.3.0.1011)
+  - Intel(R) USB 3.0 eXtensible-Hostcontroller (driver 1.0.6.245)
+  - Intel(R) USB 3.0-Root-Hub (driver 1.0.6.245)
+  - USB 2.0-Hub (driver 1.0.6.245)
+  - USB 3.0-Hub (driver 1.0.6.245)
+  - USB-Root-Hub
+  - USB-Root-Hub
+  - USB-Verbundgerät
+  - USB-Verbundgerät
+
+disassembling:
+[...]
+00409137      jz      loc_409140
+00409139      mov     edx, [edx]
+0040913b      call    -$bbc ($408584)        ; System.@FinalizeArray
+00409140      sub     eax, 8
+00409143      call    -$4d10 ($404438)       ; System.@FreeMem
+00409148    > pop     eax
+00409149      ret
+

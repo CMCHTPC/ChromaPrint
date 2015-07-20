@@ -1,0 +1,56 @@
+unit CP.Def;
+
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils;
+
+const
+    CHROMAPRINT_VERSION_MAJOR = 1;
+    CHROMAPRINT_VERSION_MINOR = 2;
+    CHROMAPRINT_VERSION_PATCH = 0;
+
+const
+    kMinSampleRate = integer(1000);
+    kMaxBufferSize = integer(1024 * 16);
+
+    // Resampler configuration
+    kResampleFilterLength = integer(16);
+    kResamplePhaseCount = integer(10);
+    kResampleLinear = integer(0);
+    kResampleCutoff = 0.8;
+
+    NUM_BANDS = 12;
+
+const
+    cSAMPLE_RATE = 11025;
+    cFRAME_SIZE = 4096;
+    cOVERLAP = cFRAME_SIZE - cFRAME_SIZE div 3;
+    cMIN_FREQ = 28;
+    cMAX_FREQ = 3520;
+
+    Math_Pi: double = 3.1415926535897931;
+    TwoMath_Pi: double = 6.2831853071795862;
+
+type
+    TUINT32Array = array of UINT32;
+    PUINT32Array = ^TUINT32Array;
+    TSmallintArray = array of smallint;
+    TDoubleArray = array of double;
+    PDoubleArray = ^TDoubleArray;
+
+    TSingleArray = array of single;
+    PSingleArray = ^TSingleArray;
+
+    PINT32 = array of INT32;
+
+    TChromaprintAlgorithm = (CHROMAPRINT_ALGORITHM_TEST1 = 0, CHROMAPRINT_ALGORITHM_TEST2, CHROMAPRINT_ALGORITHM_TEST3, CHROMAPRINT_ALGORITHM_TEST4,
+        CHROMAPRINT_ALGORITHM_DEFAULT = CHROMAPRINT_ALGORITHM_TEST2);
+
+implementation
+
+end.

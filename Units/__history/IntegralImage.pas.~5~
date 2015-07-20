@@ -1,0 +1,122 @@
+unit IntegralImage;
+
+{$IFDEF FPC}
+{$mode delphi}
+{$ENDIF}
+
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Image;
+
+
+{*
+     * Image transformation that allows us to quickly calculate the sum of
+     * values in a rectangular area.
+     *
+     * http://en.wikipedia.org/wiki/Summed_area_table
+     *}
+type
+
+    { TIntegralImage }
+
+    TIntegralImage = class(TObject)
+    private
+        m_image: TImage;
+        procedure Transform;
+    public
+      {* Construct the integral image. Note that will modify the original
+         * image in-place, so it will not be usable afterwards. }
+        constructor Create(image: TImage);
+        function Area(x1, y1, x2, y2: integer): double;
+        function NumColumns: integer;
+        function NumRows: integer;
+        function GetData(Row,Column: integer):Double;
+    end;
+
+implementation
+
+{ TIntegralImage }
+
+procedure TIntegralImage.Transform;
+var
+    lColumns, lRows: integer;
+    m, n: integer;
+begin
+    // c++ is a pain;
+    // in Pascal you know what you're doing
+    lColumns := m_image.NumColumns;
+    lRows := m_image.NumRows;
+    for m := 1 to lColumns - 1 do
+    begin
+        // First column - add value on top
+        m_image.SetData(0, m, m_image.GetData(0, m) + m_image.GetData(0, m - 1));
+    end;
+    for n := 1 to lRows - 1 do
+    begin
+        // First row - add value on left
+        m_image.SetData(n, 0, m_image.GetData(n, 0) + m_image.GetData(n - 1, 0));
+        for m := 1 to lColumns - 1 do
+        begin
+            m_image.SetData(n, m, m_image.GetData(n, m) + m_image.GetData(n - 1, m) + m_image.GetData(n, m - 1) + m_image.GetData(n - 1, m - 1));
+        end;
+    end;
+end;
+
+
+
+constructor TIntegralImage.Create(image: TImage);
+begin
+    m_image := image;
+    Transform;
+end;
+
+
+
+function TIntegralImage.GetData(Row, Column: integer): Double;
+begin
+    result:=m_image.GetData(Row,Column);
+end;
+
+function TIntegralImage.Area(x1, y1, x2, y2: integer): double;
+var
+    lArea: double;
+begin
+    if (x2 < x1) or (y2 < y1) then
+    begin
+        Result := 0.0;
+        Exit;
+    end;
+    lArea := m_image.GetData(x2, y2);
+    if (x1 > 0) then
+    begin
+        lArea := lArea - m_image.GetData(x1 - 1, y2);
+        if (y1 > 0) then
+        begin
+            lArea := lArea + m_image.GetData(x1 - 1, y1 - 1);
+        end;
+    end;
+    if (y1 > 0) then
+    begin
+        lArea := lArea - m_image.GetData(x2, y1 - 1);
+    end;
+    Result := lArea;
+end;
+
+
+
+function TIntegralImage.NumColumns: integer;
+begin
+    Result := m_image.NumColumns;
+end;
+
+
+
+function TIntegralImage.NumRows: integer;
+begin
+    Result := m_image.NumRows;
+end;
+
+end.

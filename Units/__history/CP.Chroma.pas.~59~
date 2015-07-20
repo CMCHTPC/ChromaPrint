@@ -1,0 +1,169 @@
+{$REGION 'Copyright (C) CMC Development Team'}
+{ **************************************************************************
+  Copyright (C) 2015 CMC Development Team
+
+  CMC is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  CMC is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with CMC. If not, see <http://www.gnu.org/licenses/>.
+  ************************************************************************** }
+
+{ **************************************************************************
+  Additional Copyright (C) for this modul:
+
+  Chromaprint: Audio fingerprinting toolkit
+  Copyright (C) 2010-2012  Lukas Lalinsky <lalinsky@gmail.com>
+
+
+  Lomont FFT: Fast Fourier Transformation
+  Original code by Chris Lomont, 2010-2012, http://www.lomont.org/Software/
+
+
+  ************************************************************************** }
+{$ENDREGION}
+{$REGION 'Notes'}
+{ **************************************************************************
+
+  See CP.Chromaprint.pas for more information
+
+  ************************************************************************** }
+unit CP.Chroma;
+{$IFDEF FPC}
+{$MODE delphi}
+{$ENDIF}
+
+interface
+
+uses
+    Classes, SysUtils,
+    CP.Def, CP.FFT, CP.FeatureVectorConsumer;
+
+type
+    TChroma = class(TFFTFrameConsumer)
+    private
+        FInterpolate: boolean;
+        FMinIndex: integer;
+        FMaxIndex: integer;
+
+        FNotes: array of byte; // char in c++
+        FNotesFrac: TDoubleArray;
+        FFeatures: TDoubleArray;
+
+        FConsumer: TFeatureVectorConsumer;
+        procedure PrepareNotes(min_freq, max_freq, frame_size, sample_rate: integer);
+    public
+        property Interpolate: boolean read FInterpolate write FInterpolate;
+
+    public
+        constructor Create(min_freq, max_freq, frame_size, sample_rate: integer; consumer: TFeatureVectorConsumer);
+        destructor Destroy; override;
+        procedure Reset;
+        procedure Consume(Frame: TFFTFrame); override;
+    end;
+
+implementation
+
+uses
+    CP.Utils, Math
+{$IFDEF FPC}
+    , DaMath
+{$ENDIF};
+
+{ TChroma }
+
+procedure TChroma.PrepareNotes(min_freq, max_freq, frame_size, sample_rate: integer);
+var
+    i: integer;
+    freq, octave, note: double;
+    cn: byte;
+    j: integer;
+begin
+    FMinIndex := Math.Max(1, FreqToIndex(min_freq, frame_size, sample_rate));
+    FMaxIndex := Math.Min(frame_size div 2, FreqToIndex(max_freq, frame_size, sample_rate));
+    for i := FMinIndex to FMaxIndex - 1 do
+    begin
+        freq := IndexToFreq(i, frame_size, sample_rate);
+        octave := FreqToOctave(freq);
+        note := NUM_BANDS * (octave - floor(octave));
+        cn := byte(trunc(note));
+        FNotes[i] := cn;
+        FNotesFrac[i] := note - FNotes[i];
+    end;
+end;
+
+constructor TChroma.Create(min_freq, max_freq, frame_size, sample_rate: integer; consumer: TFeatureVectorConsumer);
+begin
+    FInterpolate := False;
+    SetLength(FNotes, frame_size);
+    SetLength(FNotesFrac, frame_size);
+    SetLength(FFeatures, NUM_BANDS);
+    FConsumer := consumer;
+    PrepareNotes(min_freq, max_freq, frame_size, sample_rate);
+end;
+
+destructor TChroma.Destroy;
+begin
+    SetLength(FNotes, 0);
+    SetLength(FNotesFrac, 0);
+    SetLength(FFeatures, 0);
+    FConsumer := nil;
+    inherited Destroy;
+end;
+
+procedure TChroma.Reset;
+begin
+    { nothing to do }
+end;
+
+procedure TChroma.Consume(Frame: TFFTFrame);
+var
+    lNote, i, lNote2, n: integer;
+    lEnergy, a: double;
+    j: integer;
+    s: string;
+begin
+    n := Length(FFeatures);
+    for i := 0 to n - 1 do
+    begin
+        FFeatures[i] := 0.0;
+    end;
+
+    for i := FMinIndex to FMaxIndex - 1 do
+    begin
+        lNote := FNotes[i];
+        lEnergy := Frame.energy(i);
+        if (FInterpolate) then
+        begin
+            lNote2 := lNote;
+            a := 1.0;
+            if (FNotesFrac[i] < 0.5) then
+            begin
+                lNote2 := (lNote + NUM_BANDS - 1) mod NUM_BANDS;
+                a := 0.5 + FNotesFrac[i];
+            end;
+            if (FNotesFrac[i] > 0.5) then
+            begin
+                lNote2 := (lNote + 1) mod NUM_BANDS;
+                a := 1.5 - FNotesFrac[i];
+            end;
+            FFeatures[lNote] := FFeatures[lNote] + lEnergy * a;
+            FFeatures[lNote2] := FFeatures[lNote2] + lEnergy * (1.0 - a);
+        end
+        else
+        begin
+            FFeatures[lNote] := FFeatures[lNote] + lEnergy;
+        end;
+    end;
+    FConsumer.Consume(FFeatures);
+
+end;
+
+end.

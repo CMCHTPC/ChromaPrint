@@ -1,0 +1,196 @@
+unit CP.Filter;
+
+{$IFDEF FPC}
+{$mode delphi}
+{$ENDIF}
+
+
+interface
+
+uses
+    Classes, SysUtils,
+    IntegralImage;
+
+type
+
+    TComparator = function(a, b: double): double;
+    { TFilter }
+
+    TFilter = class(TObject)
+    private
+        m_type: integer;
+        m_y: integer;
+        m_height: integer;
+        m_width: integer;
+    public
+        property _Type: integer read m_type write m_type;
+        property Y: integer read m_y write m_y;
+        property Height: integer read m_height write m_height;
+        property Width: integer read m_width write m_width;
+
+    public
+        constructor Create(_type: integer = 0; y: integer = 0; Height: integer = 0; Width: integer = 0);
+        function Apply(image: TIntegralImage; offset: integer): double;
+    end;
+
+implementation
+
+uses
+    Math;
+
+{ TFilter }
+
+function Subtract(a, b: double): double; inline;
+begin
+    Result := a - b;
+end;
+
+
+
+function SubtractLog(a, b: double): double; inline;
+var
+    r: double;
+begin
+    r := log(1.0 + a) - log(1.0 + b);
+    // assert(!IsNaN(r));
+    Result := r;
+end;
+
+
+// oooooooooooooooo
+// oooooooooooooooo
+// oooooooooooooooo
+// oooooooooooooooo
+function Filter0(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+begin
+    a := image.Area(x, y, x + w - 1, y + h - 1);
+    b := 0;
+    Result := cmp(a, b);
+end;
+
+
+// ................
+// ................
+// oooooooooooooooo
+// oooooooooooooooo
+function Filter1(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+    h_2: integer;
+begin
+    h_2 := h div 2;
+
+    a := image.Area(x, y + h_2, x + w - 1, y + h - 1);
+    b := image.Area(x, y, x + w - 1, y + h_2 - 1);
+
+    Result := cmp(a, b);
+end;
+
+
+// .......ooooooooo
+// .......ooooooooo
+// .......ooooooooo
+// .......ooooooooo
+function Filter2(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+    w_2: integer;
+begin
+    w_2 := w div 2;
+
+    a := image.Area(x + w_2, y, x + w - 1, y + h - 1);
+    b := image.Area(x, y, x + w_2 - 1, y + h - 1);
+
+    Result := cmp(a, b);
+end;
+
+
+// .......ooooooooo
+// .......ooooooooo
+// ooooooo.........
+// ooooooo.........
+function Filter3(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+    w_2, h_2: integer;
+begin
+    w_2 := w div 2;
+    h_2 := h div 2;
+
+    a := image.Area(x, y + h_2, x + w_2 - 1, y + h - 1) + image.Area(x + w_2, y, x + w - 1, y + h_2 - 1);
+    b := image.Area(x, y, x + w_2 - 1, y + h_2 - 1) + image.Area(x + w_2, y + h_2, x + w - 1, y + h - 1);
+
+    Result := cmp(a, b);
+end;
+
+
+// ................
+// oooooooooooooooo
+// ................
+function Filter4(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+    h_3: integer;
+begin
+    h_3 := h div 3;
+
+    a := image.Area(x, y + h_3, x + w - 1, y + 2 * h_3 - 1);
+    b := image.Area(x, y, x + w - 1, y + h_3 - 1) + image.Area(x, y + 2 * h_3, x + w - 1, y + h - 1);
+
+    Result := cmp(a, b);
+end;
+
+
+// .....oooooo.....
+// .....oooooo.....
+// .....oooooo.....
+// .....oooooo.....
+function Filter5(image: TIntegralImage; x, y, w, h: integer; cmp: TComparator): double;
+var
+    a, b: double;
+    w_3: integer;
+begin
+    w_3 := w div 3;
+
+    a := image.Area(x + w_3, y, x + 2 * w_3 - 1, y + h - 1);
+    b := image.Area(x, y, x + w_3 - 1, y + h - 1) + image.Area(x + 2 * w_3, y, x + w - 1, y + h - 1);
+
+    Result := cmp(a, b);
+end;
+
+
+
+constructor TFilter.Create(_type: integer; y: integer; Height: integer; Width: integer);
+begin
+    m_type := _type;
+    m_y := y;
+    m_height := Height;
+    m_width := Width;
+end;
+
+
+
+function TFilter.Apply(image: TIntegralImage; offset: integer): double;
+begin
+    case (m_type) of
+        0:
+            Result := Filter0(image, offset, m_y, m_width, m_height, SubtractLog);
+        1:
+            Result := Filter1(image, offset, m_y, m_width, m_height, SubtractLog);
+        2:
+            Result := Filter2(image, offset, m_y, m_width, m_height, SubtractLog);
+        3:
+            Result := Filter3(image, offset, m_y, m_width, m_height, SubtractLog);
+        4:
+            Result := Filter4(image, offset, m_y, m_width, m_height, SubtractLog);
+        5:
+            Result := Filter5(image, offset, m_y, m_width, m_height, SubtractLog);
+        else
+            Result := 0.0;
+
+    end;
+end;
+
+end.
